@@ -1,67 +1,72 @@
 <template>
 	<div class="analysis">
-		<div style="background-color: white;">
-			<a-row>
-				<a-col :span="12">
-					<a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
-						<a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
-							<a-select value="1" placeholder="ant-design@alipay.com">
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-							</a-select>
-						</a-form-item>
-					</a-form>
-				</a-col>
-				<a-col :span="12">
-					<a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
-						<a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
-							<a-select value="1" placeholder="ant-design@alipay.com">
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-								<a-select-option value="1">ant-design@alipay.com</a-select-option>
-							</a-select>
-						</a-form-item>
-					</a-form>
-				</a-col>
-			</a-row>
 
-
-
-
-
-		</div>
 		<a-row style="margin-top: 0" :gutter="[24, 24]">
-
+			<!-- 接通率 -->
 			<a-col :sm="24" :md="12" :xl="6">
-				<chart-card :loading="loading" :title="$t('totalSales')" total="￥ 189,345">
-					<a-tooltip :title="$t('introduce')" slot="action">
-						<a-icon type="info-circle-o" />
-					</a-tooltip>
-					<div>
-						<trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
-						<trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
-					</div>
-					<div slot="footer">{{$ta('daily|sales', 'p')}}<span> ￥234.56</span></div>
-				</chart-card>
-			</a-col>
-			<a-col :sm="24" :md="12" :xl="6">
-				<chart-card :loading="loading" :title="$t('visits')" total="￥ 189,345">
-					<a-tooltip :title="$t('introduce')" slot="action">
+				<chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" total="45 %">
+					<a-tooltip :title="$t('introduce01')" slot="action">
 						<a-icon type="info-circle-o" />
 					</a-tooltip>
 					<div>
 						<mini-area />
 					</div>
-					<div slot="footer">{{$ta('daily|visits', 'p')}}<span> 123,4</span></div>
+					<div slot="footer">{{$t('averagelv')}}<span> 38 %</span></div>
 				</chart-card>
 			</a-col>
+			<!-- 接通量 -->
+			<a-col :sm="24" :md="12" :xl="6" >
+				<chart-card :loading="loading" :title=" $t('nowjietongliang')" :total="myall.alldata + '  通'">
+					<a-tooltip :title="$t('introduce02') " slot="action">
+						<a-icon type="info-circle-o" />
+					</a-tooltip>
+					<div>
+						<double-bar />
+					</div>
+					<div slot="footer"><span>{{$t('amountliang')}} {{myall.alldata}} 通</span>
+						<span style="margin-left: 1rem;">{{$t('averageliang')}} {{myall.alldata}} 通 </span>
+					</div>
+				</chart-card>
+			</a-col>
+			<!-- 时长 -->
 			<a-col :sm="24" :md="12" :xl="6">
-				<chart-card :loading="loading" :title="$t('payments')" total="￥ 189,345">
-					<a-tooltip :title="$t('introduce')" slot="action">
-						<a-form style="max-width: 500px; margin: 40px auto 0;">
+				<chart-card :loading="loading" :title="$t('nowshichang')" total="189,345 秒">
+					<a-tooltip :title="$t('introduce03')" slot="action">
+						<a-icon type="info-circle-o" />
+					</a-tooltip>
+					<div>
+						<mini-bar :fd="fakeY" />
+					</div>
+					<div slot="footer">
+						<span>{{$t('averageshichang')}} 265,256秒</span>
+						<!-- <span style="margin-left: 1rem;"> {{$t('dayreach')}} 60%</span> -->
+						<!-- <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" /> -->
+						<trend style="margin-left: 1rem;" :term="$t('dayreach')" :target="100" :value="60" :scale="0" />
+					</div>
+				</chart-card>
+			</a-col>
+			<!-- 费用 -->
+			<a-col :sm="24" :md="12" :xl="6">
+				<chart-card :loading="loading" :title="$t('nowmoney')" total="¥ 638 元">
+					<a-tooltip :title="$t('introduce04')" slot="action">
+						<a-icon type="info-circle-o" />
+					</a-tooltip>
+					<div>
+						<mini-progress target="90" :percent="permoney" color="#13C2C2" height="8px" />
+					</div>
+					<div slot="footer" style="white-space: nowrap;overflow: hidden">
+						<span>{{$t('averagemoney')}} 652元</span>
+						<!-- <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" /> -->
+						<trend style="margin-left: 1rem;" :term="$t('daytake')" :target="100" :value="46" :scale="0" />
+					</div>
+				</chart-card>
+			</a-col>
+		</a-row>
+		<a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
+			<div style="background-color: white;">
+				<a-row>
+					<a-col :span="12">
+						<a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
 							<a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
 								<a-select value="1" placeholder="ant-design@alipay.com">
 									<a-select-option value="1">ant-design@alipay.com</a-select-option>
@@ -71,29 +76,22 @@
 								</a-select>
 							</a-form-item>
 						</a-form>
-					</a-tooltip>
-					<div>
-						<mini-bar :fd="fakeY"/>
-					</div>
-					<div slot="footer">{{$t('conversion')}} <span>60%</span></div>
-				</chart-card>
-			</a-col>
-			<a-col :sm="24" :md="12" :xl="6">
-				<chart-card :loading="loading" :title="$t('operating')" total="73%">
-					<a-tooltip :title="$t('introduce')" slot="action">
-						<a-icon type="info-circle-o" />
-					</a-tooltip>
-					<div>
-						<mini-progress target="90" percent="78" color="#13C2C2" height="8px" />
-					</div>
-					<div slot="footer" style="white-space: nowrap;overflow: hidden">
-						<trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
-						<trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
-					</div>
-				</chart-card>
-			</a-col>
-		</a-row>
-		<a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
+					</a-col>
+					<a-col :span="12">
+						<a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
+							<a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
+								<a-select value="1" placeholder="ant-design@alipay.com">
+									<a-select-option value="1">ant-design@alipay.com</a-select-option>
+									<a-select-option value="1">ant-design@alipay.com</a-select-option>
+									<a-select-option value="1">ant-design@alipay.com</a-select-option>
+									<a-select-option value="1">ant-design@alipay.com</a-select-option>
+								</a-select>
+							</a-form-item>
+						</a-form>
+					</a-col>
+				</a-row>
+
+			</div>
 			<div class="salesCard">
 				<a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
 					<div class="extra-wrap" slot="tabBarExtraContent">
@@ -150,6 +148,7 @@
 
 <script>
 	import ChartCard from '../../../components/card/ChartCard'
+	import DoubleBar from '../../../components/chart/DoubleBar.vue'
 	import MiniArea from '../../../components/chart/MiniArea'
 	import MiniBar from '../../../components/chart/MiniBar'
 	import MiniProgress from '../../../components/chart/MiniProgress'
@@ -175,11 +174,24 @@
 			return {
 				rankList,
 				loading: true,
-				fakeY : [10, 15, 4, 2, 4, 7, 5, 6, 5, 9, 6]
+				fakeY: [1500, 1000, 1320, 860, 1135],
+				myall: {
+					alldata: 231
+				},
+				permoney:20
 			}
+		},
+		methods:{
+			
 		},
 		created() {
 			setTimeout(() => this.loading = !this.loading, 1000)
+			// const tim = setInterval(()=>{
+			// 	this.permoney += 5
+			// 	if(this.permoney > 90) {
+			// 		clearInterval(tim)
+			// 	}
+			// },500)
 		},
 		components: {
 			Trend,
@@ -190,7 +202,9 @@
 			MiniProgress,
 			MiniBar,
 			MiniArea,
+			DoubleBar,
 			ChartCard
+			
 		}
 	}
 </script>

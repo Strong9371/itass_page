@@ -1,4 +1,4 @@
-import {LOGIN, ROUTES} from '@/services/api'
+import {LOGIN, ROUTES,TEST} from '@/services/api'
 import {request, METHOD, removeAuthorization} from '@/utils/request'
 
 /**
@@ -27,8 +27,16 @@ export function logout() {
   localStorage.removeItem(process.env.VUE_APP_ROLES_KEY)
   removeAuthorization()
 }
+
+export async function test(formdataSt) {
+  return request(TEST, METHOD.GET,{
+    formdata:formdataSt
+  })
+}
+
 export default {
   login,
   logout,
-  getRoutesConfig
+  getRoutesConfig,
+  test
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="mini-chart">
     <div class="chart-content" :style="{height: 46}">
-      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, 5, 18, 5]">
+      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, -10, 18, -10]" :scale = "scale">
         <v-tooltip />
         <v-smooth-area position="x*y" />
       </v-chart>
@@ -10,30 +10,31 @@
 </template>
 
 <script>
-import {format} from 'date-fns'
+// import {format} from 'date-fns'
 
 const data = []
-const beginDay = new Date().getTime()
+// const beginDay = new Date().getTime()
 
-const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5]
-for (let i = 0; i < fakeY.length; i += 1) {
+const fakeY = [0,6,4,0,6,4,0,6,4,8,9,43]
+// const timeSt = ["08:00","09:00","10:00","11:00","08:00","09:00","10:00","11:00",]
+for (let i = 8; i < (fakeY.length + 8); i += 1) {
   data.push({
-    x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
-    y: fakeY[i]
+    x: i  + ":00" ,
+    y: fakeY[i-8]
   })
 }
 
 const tooltip = [
   'x*y',
   (x, y) => ({
-    name: x,
+    name: x ,
     value: y
   })
 ]
 
 const scale = [{
   dataKey: 'x',
-  min: 2
+  min: 1
 }, {
   dataKey: 'y',
   title: '时间',
