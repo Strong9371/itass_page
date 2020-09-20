@@ -46,6 +46,9 @@ export default {
       scale,
       tooltip
     }
+  },
+  created() {
+
   }
 }
 </script>

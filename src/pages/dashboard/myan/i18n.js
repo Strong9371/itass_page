@@ -17,7 +17,7 @@ module.exports = {
 			dayreach:'环比达成',
 			
 			nowmoney: '实时话费',
-			introduce04:'预计费用，实际以发生为准，当话费低于1000时，启动阈值预警',
+			introduce04:'此为预计费用，实际以发生为准，阈值预警可自由设置',
 			averagemoney: '日均话费',
 			daytake:'环比花销',
 			

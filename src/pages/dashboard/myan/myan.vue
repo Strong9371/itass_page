@@ -5,11 +5,29 @@
       <!-- 接通率 -->
       <a-col :sm="24" :md="12" :xl="6">
         <chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" total="45 %">
-          <a-tooltip :title="$t('introduce01')" slot="action">
-            <a-icon type="info-circle-o"/>
-          </a-tooltip>
+          <!--          <a-tooltip :title="$t('introduce01')" slot="action">-->
+          <!--            <a-icon type="info-circle-o"/>-->
+          <!--          </a-tooltip>-->
           <div>
-            <mini-area :jietonglvdata="jietonglvdata"/>
+            <a-select default-value="lucy" style="width: 100px;position: absolute;top: -110px;right: 0px"
+                      @change="handleChange">
+              <a-select-option value="jack">
+                Jack
+              </a-select-option>
+              <a-select-option value="lucy">
+                Lucy
+              </a-select-option>
+              <a-select-option value="disabled" disabled>
+                Disabled
+              </a-select-option>
+              <a-select-option value="Yiminghe">
+                yiminghe
+              </a-select-option>
+            </a-select>
+
+          </div>
+          <div>
+            <mini-area :jietonglv="jietonglv"/>
           </div>
           <div slot="footer">{{ $t('averagelv') }}<span> 38 %</span></div>
         </chart-card>
@@ -21,7 +39,7 @@
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <double-bar/>
+            <double-bar :jietongliang="jietongliang"/>
           </div>
           <div slot="footer"><span>{{ $t('amountliang') }} {{ myall.alldata }} 通</span>
             <span style="margin-left: 1rem;">{{ $t('averageliang') }} {{ myall.alldata }} 通 </span>
@@ -35,7 +53,7 @@
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <mini-bar :fd="fakeY"/>
+            <mini-bar :tonghuatime="tonghuatime"/>
           </div>
           <div slot="footer">
             <span>{{ $t('averageshichang') }} 265,256秒</span>
@@ -52,7 +70,7 @@
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
-            <mini-progress target="90" :percent="permoney" color="#13C2C2" height="8px"/>
+            <mini-progress :target="phonecharge.target" :residue="phonecharge.residue"/>
           </div>
           <div slot="footer" style="white-space: nowrap;overflow: hidden">
             <span>{{ $t('averagemoney') }} 652元</span>
@@ -65,29 +83,39 @@
     <a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
       <div style="background-color: white;">
         <a-row>
-          <a-col :span="12">
-            <a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
-              <a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
-                <a-select value="1" placeholder="ant-design@alipay.com">
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-form>
+          <a-col :span="8">
+            <div>
+              <a-radio-group default-value="a" button-style="solid">
+                <a-radio-button value="a">
+                  日视图
+                </a-radio-button>
+                <a-radio-button value="b">
+                  月视图
+                </a-radio-button>
+
+              </a-radio-group>
+
+              <a-date-picker @change="onChange" style="margin-left: 5px"/>
+            </div>
           </a-col>
-          <a-col :span="12">
-            <a-form style="max-width: 500px; margin: 0px 0px -20px;background-color: white;z-index: 9999;">
-              <a-form-item :label="$t('payment')" :labelCol="{span: 7}" :wrapperCol="{span: 17}">
-                <a-select value="1" placeholder="ant-design@alipay.com">
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                  <a-select-option value="1">ant-design@alipay.com</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-form>
+
+
+          <a-col :span="8">
+            <div>
+              <a-tree-select
+                  v-model="value"
+                  style="width: 100%"
+                  :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                  :tree-data="treeData"
+                  placeholder="Please select"
+                  change="se"
+              >
+
+              </a-tree-select>
+            </div>
+          </a-col>
+          <a-col :span="8">
+
           </a-col>
         </a-row>
 
@@ -148,9 +176,6 @@
 
 <script>
 import ChartCard from '../../../components/card/ChartCard'
-import DoubleBar from '../../../components/chart/DoubleBar.vue'
-import MiniBar from '../../../components/chart/MiniBar'
-import MiniProgress from '../../../components/chart/MiniProgress'
 import Bar from '../../../components/chart/Bar'
 import RankingList from '../../../components/chart/RankingList'
 import HotSearch from './HotSearch'
@@ -159,6 +184,9 @@ import Trend from '../../../components/chart/Trend'
 
 //我的插件
 import MiniArea from '../../../components/mychart/MiniArea'
+import DoubleBar from '../../../components/mychart/DoubleBar.vue'
+import MiniBar from '../../../components/mychart/MiniBar'
+import MiniProgress from '../../../components/mychart/MiniProgress'
 
 
 const rankList = []
@@ -182,11 +210,10 @@ export default {
       myall: {
         alldata: 231
       },
-      permoney: 20,
 
       //    我的测试数据
       //  接通率数据
-      jietonglvdata: [
+      jietonglv: [
         {
           "timeSt": "08:30",
           "type": "接通率",
@@ -273,18 +300,154 @@ export default {
           "nowjtl": 0.25
         }
       ],
+      //接通率其他数据
+      jtldata: {},
+      jietongliang: [
+        {
+          type: '电话量',
+          depart: '融资',
+          amount: 40
+        }, {
+          type: '接通量',
+          depart: '融资',
+          amount: 28
+        },
+        {
+          type: '电话量',
+          depart: '大客户',
+          amount: 36
+        },
+
+        {
+          type: '接通量',
+          depart: '大客户',
+          amount: 28
+        },
+
+        {
+          type: '电话量',
+          depart: '资质',
+          amount: 29
+        },
+        {
+          type: '接通量',
+          depart: '资质',
+          amount: 20
+        },
+
+        {
+          type: '电话量',
+          depart: '创发',
+          amount: 22
+        },
+        {
+          type: '接通量',
+          depart: '创发',
+          amount: 12
+        },
+
+        {
+          type: '电话量',
+          depart: '法律',
+          amount: 26
+        },
+        {
+          type: '接通量',
+          depart: '法律',
+          amount: 18
+        },
+
+      ],
+      //接通量其他数据
+      jtlidata: {},
+      tonghuatime: [
+        {
+          depart: '融资',
+          type: "时长",
+          timeamount: 3800
+        },
+        {
+          depart: '大客户',
+          type: "时长",
+          timeamount: 2800
+        },
+        {
+          depart: '资质',
+          type: "时长",
+          timeamount: 2100
+        },
+        {
+          depart: '创发',
+          type: "时长",
+          timeamount: 1200
+        },
+        {
+          depart: '法律',
+          type: "时长",
+          timeamount: 2400
+        },
+      ],
+      //  接通时长其他数据
+      thdata: {},
+      phonecharge: {
+        residue: 1100,
+        //报警余额
+        target: 1800,
+
+      },
+      //分公司数选择器假数据
+      treeData : [
+        {
+          title: 'Node1',
+          value: '0-0',
+          key: '0-0',
+          children: [
+            {
+              value: '0-0-1',
+              key: '0-0-1',
+              title: 'Child Node1',
+              scopedSlots: {
+                // custom title
+                title: 'title',
+              },
+            },
+            {
+              title: 'Child Node2',
+              value: '0-0-2',
+              key: '0-0-2',
+            },
+          ],
+        },
+        {
+          title: 'Node2',
+          value: '0-1',
+          key: '0-1',
+        },
+      ],
+      value: undefined,
 
 
     }
   },
-  methods: {},
+  watch: {
+    value(value) {
+      console.log(value);
+
+    },
+  },
+  methods: {
+    //实时地区选择器
+    handleChange(value) {
+      console.log(`selected ${value}`);
+    },
+    onChange(date, dateString) {
+      console.log(date, dateString);
+    },
+
+  },
   created() {
     setTimeout(() => this.loading = !this.loading, 1000)
     // const tim = setInterval(()=>{
-    // 	this.permoney += 5
-    // 	if(this.permoney > 90) {
-    // 		clearInterval(tim)
-    // 	}
     // },500)
   },
   components: {

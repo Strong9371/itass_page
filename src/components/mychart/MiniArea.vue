@@ -1,7 +1,7 @@
 <template>
   <div class="mini-chart">
     <div class="chart-content" :style="{height: 46}">
-      <v-chart :force-fit="true" :height="height" :data="jietonglvdata" :padding="[36, -10, 18, -10]" >
+      <v-chart :force-fit="true" :height="height" :data="jietonglv" :padding="[36, -10, 18, -10]" >
         <v-tooltip />
         <v-smooth-area position="timeSt*nowjtl"  color="type"/>
       </v-chart>
@@ -41,7 +41,7 @@ const scale = [{
 
 export default {
   name: 'MiniArea',
-  props: ['jietonglvdata'],
+  props: ['jietonglv'],
   data () {
     return {
       data:[],
