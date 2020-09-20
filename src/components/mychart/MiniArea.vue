@@ -1,55 +1,53 @@
 <template>
   <div class="mini-chart">
     <div class="chart-content" :style="{height: 46}">
-      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, -10, 18, -10]" :scale = "scale">
+      <v-chart :force-fit="true" :height="height" :data="jietonglvdata" :padding="[36, -10, 18, -10]" >
         <v-tooltip />
-        <v-smooth-area position="x*y" />
+        <v-smooth-area position="timeSt*nowjtl"  color="type"/>
       </v-chart>
     </div>
   </div>
 </template>
 
 <script>
-// import {format} from 'date-fns'
 
-const data = []
-// const beginDay = new Date().getTime()
-
-const fakeY = [0,6,4,0,6,4,0,6,4,8,9,43]
+// const data = []
+// const fakeY = [0.3,0.6,0.4,0.0,0.43,0.4,0.0,0.6,0.4]
 // const timeSt = ["08:00","09:00","10:00","11:00","08:00","09:00","10:00","11:00",]
-for (let i = 8; i < (fakeY.length + 8); i += 1) {
-  data.push({
-    x: i  + ":00" ,
-    y: fakeY[i-8]
-  })
-}
+// for (let i = 8; i < (fakeY.length + 8); i += 1) {
+//   data.push({
+//     x: i  + ":00" ,
+//     y: fakeY[i-8]
+//   })
+// }
 
 const tooltip = [
   'x*y',
-  (x) => ({
+  (x, y) => ({
     name: x ,
-    value: "sad"
+    value: y
   })
 ]
 
 const scale = [{
   dataKey: 'x',
-  min: 1
+  min: 0
 }, {
   dataKey: 'y',
   title: '时间',
-  min: 1,
-  max: 22
+  min: -0.5,
+  max: 0.7
 }]
 
 export default {
   name: 'MiniArea',
+  props: ['jietonglvdata'],
   data () {
     return {
-      data,
+      data:[],
       scale,
       tooltip,
-      height: 100
+      height: 110
     }
   }
 }

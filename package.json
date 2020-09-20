@@ -65,10 +65,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-		
-		"no-tabs": "off"
-		
-	}
+      "no-tabs": "off"
+    }
   },
   "browserslist": [
     "> 1%",
