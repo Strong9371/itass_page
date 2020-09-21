@@ -1,9 +1,9 @@
 <template>
   <div class="analysis">
 
-    <a-row style="margin-top: 0" :gutter="[24, 24]">
+    <a-row style="margin-top: 0" :gutter="[24, 24]" >
       <!-- 接通率 -->
-      <a-col :sm="24" :md="12" :xl="6">
+      <a-col :sm="24" :md="12" :xl="4">
         <chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" :total="testtol">
           <!--          <a-tooltip :title="$t('introduce01')" slot="action">-->
           <!--            <a-icon type="info-circle-o"/>-->
@@ -32,8 +32,11 @@
           <div slot="footer">{{ $t('averagelv') }}<span> 38 %</span></div>
         </chart-card>
       </a-col>
+
+
+
       <!-- 接通量 -->
-      <a-col :sm="24" :md="12" :xl="6">
+      <a-col :sm="24" :md="12" :xl="5">
         <chart-card :loading="loading" :title=" $t('nowjietongliang')" :total="myall.alldata + '  通'">
           <a-tooltip :title="$t('introduce02') " slot="action">
             <a-icon type="info-circle-o"/>
@@ -41,13 +44,36 @@
           <div>
             <double-bar :jietongliang="jietongliang"/>
           </div>
-          <div slot="footer"><span>{{ $t('amountliang') }} {{ myall.alldata }} 通</span>
-            <span style="margin-left: 1rem;">{{ $t('averageliang') }} {{ myall.alldata }} 通 </span>
+          <div slot="footer"><span>{{ $t('average') }} {{ myall.alldata }} / 369 通</span>
+<!--            <trend style="margin-left: 1rem" :term="$t('secreach')" :target="100" :value="60" :scale="0"/>-->
+            <trend  style="margin-left: 1rem" :term="$t('reach')" :percent="12" :is-increase="true" :scale="0" />
           </div>
         </chart-card>
       </a-col>
+
+      <!-- 30/60秒时长 -->
+      <a-col :sm="24" :md="12" :xl="5">
+        <chart-card :loading="loading" :title="$t('secondliang')" :total="secliang + '通'">
+                    <a-tooltip :title="$t('introduce05')" slot="action">
+                      <a-icon type="info-circle-o"/>
+                    </a-tooltip>
+
+          <div>
+            <sec-bar :secdata="secdata"/>
+          </div>
+          <div slot="footer">
+            <span>{{ $t('average') }} 1900/1420 通</span>
+            <trend style="margin-left: 1rem" :term="$t('reach')" :target="100" :value="60" :scale="0"/>
+            /
+            <trend   :percent="12" :is-increase="true" :scale="0" />
+
+          </div>
+        </chart-card>
+      </a-col>
+
+
       <!-- 时长 -->
-      <a-col :sm="24" :md="12" :xl="6">
+      <a-col :sm="24" :md="12" :xl="5">
         <chart-card :loading="loading" :title="$t('nowshichang')" total="189,345 秒">
           <a-tooltip :title="$t('introduce03')" slot="action">
             <a-icon type="info-circle-o"/>
@@ -56,15 +82,15 @@
             <mini-bar :tonghuatime="tonghuatime"/>
           </div>
           <div slot="footer">
-            <span>{{ $t('averageshichang') }} 265,256秒</span>
-            <!-- <span style="margin-left: 1rem;"> {{$t('dayreach')}} 60%</span> -->
-            <!-- <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" /> -->
-            <trend style="margin-left: 1rem;" :term="$t('dayreach')" :target="100" :value="60" :scale="0"/>
+            <span>{{ $t('average') }} 265,256秒</span>
+<!--             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />-->
+            <trend style="margin-left: 1rem" :term="$t('reach')" :target="100" :value="60" :scale="0"/>
           </div>
         </chart-card>
       </a-col>
+
       <!-- 费用 -->
-      <a-col :sm="24" :md="12" :xl="6">
+      <a-col :sm="24" :md="12" :xl="5">
         <chart-card :loading="loading" :title="$t('nowmoney')" total="¥ 638 元">
           <a-tooltip :title="$t('introduce04')" slot="action">
             <a-icon type="info-circle-o"/>
@@ -73,9 +99,9 @@
             <mini-progress :target="phonecharge.target" :residue="phonecharge.residue"/>
           </div>
           <div slot="footer" style="white-space: nowrap;overflow: hidden">
-            <span>{{ $t('averagemoney') }} 652元</span>
-            <!-- <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" /> -->
-            <trend style="margin-left: 1rem;" :term="$t('daytake')" :target="100" :value="46" :scale="0"/>
+            <span>{{ $t('average') }} 652元</span>
+<!--             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />-->
+            <trend style="margin-left: 1rem;" :term="$t('reach')" :target="100" :value="46" :scale="0"/>
           </div>
         </chart-card>
       </a-col>
@@ -121,7 +147,7 @@
 
       </div>
       <div class="salesCard">
-        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
+        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab">
           <div class="extra-wrap" slot="tabBarExtraContent">
             <div class="extra-item">
               <a>{{ $t('day') }}</a>
@@ -131,13 +157,13 @@
             </div>
             <a-range-picker :style="{width: '256px'}"></a-range-picker>
           </div>
-          <a-tab-pane loading="true" :tab="$t('sales')" key="1">
-            <a-row>
-              <a-col :xl="13" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :title="$ta('stores|sales|trend', 'p')"/>
+          <a-tab-pane loading="true" :tab="$t('sales')" key="1" style="height: 400px">
+            <a-row >
+              <a-col :span="x1" >
+                <bar :title="$ta('stores|sales|trend', 'p')" v-if=xx />
               </a-col>
-              <a-col :xl="11" :lg="12" :md="12" :sm="24" :xs="24">
-                <huanbi-bar></huanbi-bar>
+              <a-col :span="x2" v-if=xx>
+                <huanbi-bar style="width: 100%" ></huanbi-bar>
 <!--                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>-->
               </a-col>
             </a-row>
@@ -187,8 +213,10 @@ import Trend from '../../../components/chart/Trend'
 import MiniArea from '../../../components/mychart/MiniArea'
 import DoubleBar from '../../../components/mychart/DoubleBar.vue'
 import MiniBar from '../../../components/mychart/MiniBar'
+import SecBar from '../../../components/mychart/SecBar'
 import MiniProgress from '../../../components/mychart/MiniProgress'
 import HuanbiBar from '../../../components/mychart/HuanbiBar'
+
 
 
 const rankList = []
@@ -205,7 +233,6 @@ export default {
   i18n: require('./i18n'),
   data() {
     return {
-      testtol:1,
       rankList,
       loading: true,
       fakeY: [1500, 1000, 1320, 860, 1135],
@@ -303,6 +330,7 @@ export default {
           "nowjtl": 0.25
         }
       ],
+      testtol:1,
       //接通率其他数据
       jtldata: {},
       jietongliang: [
@@ -390,6 +418,60 @@ export default {
           timeamount: 2400
         },
       ],
+      //30/60秒电话量
+      secdata:[
+          {
+        sec:"30s",
+        dep:'融资',
+        num:122
+      },
+        {
+          sec:"60s",
+          dep:'融资',
+          num:182
+        },
+        {
+          sec:"30s",
+          dep:'大客户',
+          num:100
+        },
+        {
+          sec:"60s",
+          dep:'大客户',
+          num:86
+        },
+        {
+          sec:"30s",
+          dep:'资质',
+          num:45
+        },
+        {
+          sec:"60s",
+          dep:'资质',
+          num:122
+        },
+        {
+          sec:"30s",
+          dep:'创发',
+          num:45
+        },
+        {
+          sec:"60s",
+          dep:'创发',
+          num:110
+        },
+        {
+          sec:"30s",
+          dep:'法律',
+          num:45
+        },
+        {
+          sec:"60s",
+          dep:'法律',
+          num:78
+        },
+      ],
+      secliang:"185/152",
       //  接通时长其他数据
       thdata: {},
       phonecharge: {
@@ -428,7 +510,9 @@ export default {
         },
       ],
       value: undefined,
-
+      x1:12,
+      x2:12,
+      xx:true
 
     }
   },
@@ -446,13 +530,22 @@ export default {
     onChange(date, dateString) {
       console.log(date, dateString);
     },
+    changeTab(res){
+      console.log(res)
+    }
 
   },
   created() {
     setTimeout(() => this.loading = !this.loading, 1000)
-    // setInterval(()=>{
-    //   this.testtol += 2
-    // },500)
+    setTimeout(()=>{
+
+      this.xx = false
+      setTimeout(()=>{
+        this.x1 = 6;
+        this.x2 = 18;
+        this.xx = true
+      },100)
+    },5500)
   },
   components: {
     Trend,
@@ -462,6 +555,7 @@ export default {
     Bar,
     MiniProgress,
     MiniBar,
+    SecBar,
     MiniArea,
     DoubleBar,
     ChartCard,

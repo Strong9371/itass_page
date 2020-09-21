@@ -1,21 +1,28 @@
 module.exports = {
 	messages: {
 		CN: {
+			average:'日均',
+			reach:'日均比',
 			introduce01:'每小时接通率变化趋势',
 			nowjietonglv: '实时接通率',
 			averagelv:'日均接通率',
 			
-			nowjietongliang: '实时接通量',
+			nowjietongliang: '实时电话量',
 			dianhualiang:'总电话量',
 			amountliang:'电话拨打量',
 			averageliang:'日均接通量',
-			introduce02:"各部门电话量比例",
+			introduce02:"各部门 接通量/电话量 比例",
 			
 			nowshichang: '实时通话时长',
 			introduce03:"各部门通话时长",
 			averageshichang:'日均时长',
 			dayreach:'环比达成',
-			
+
+			secondliang:'实时30/60秒电话量',
+			introduce05:'各部门30秒及以上电话量',
+			average30sec:'日均30秒',
+			secreach:'环比达成',
+
 			nowmoney: '实时话费',
 			introduce04:'此为预计费用，实际以发生为准，阈值预警可自由设置',
 			averagemoney: '日均话费',
