@@ -4,7 +4,7 @@
     <a-row style="margin-top: 0" :gutter="[24, 24]">
       <!-- 接通率 -->
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" total="45 %">
+        <chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" :total="testtol">
           <!--          <a-tooltip :title="$t('introduce01')" slot="action">-->
           <!--            <a-icon type="info-circle-o"/>-->
           <!--          </a-tooltip>-->
@@ -133,11 +133,12 @@
           </div>
           <a-tab-pane loading="true" :tab="$t('sales')" key="1">
             <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+              <a-col :xl="13" :lg="12" :md="12" :sm="24" :xs="24">
                 <bar :title="$ta('stores|sales|trend', 'p')"/>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>
+              <a-col :xl="11" :lg="12" :md="12" :sm="24" :xs="24">
+                <huanbi-bar></huanbi-bar>
+<!--                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>-->
               </a-col>
             </a-row>
           </a-tab-pane>
@@ -187,6 +188,7 @@ import MiniArea from '../../../components/mychart/MiniArea'
 import DoubleBar from '../../../components/mychart/DoubleBar.vue'
 import MiniBar from '../../../components/mychart/MiniBar'
 import MiniProgress from '../../../components/mychart/MiniProgress'
+import HuanbiBar from '../../../components/mychart/HuanbiBar'
 
 
 const rankList = []
@@ -203,6 +205,7 @@ export default {
   i18n: require('./i18n'),
   data() {
     return {
+      testtol:1,
       rankList,
       loading: true,
       fakeY: [1500, 1000, 1320, 860, 1135],
@@ -447,7 +450,8 @@ export default {
   },
   created() {
     setTimeout(() => this.loading = !this.loading, 1000)
-    // const tim = setInterval(()=>{
+    // setInterval(()=>{
+    //   this.testtol += 2
     // },500)
   },
   components: {
@@ -460,7 +464,8 @@ export default {
     MiniBar,
     MiniArea,
     DoubleBar,
-    ChartCard
+    ChartCard,
+    HuanbiBar
 
   }
 }
