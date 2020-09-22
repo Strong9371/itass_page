@@ -106,69 +106,89 @@
         </chart-card>
       </a-col>
     </a-row>
+
     <a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
-      <div style="background-color: white;">
-        <a-row>
-          <a-col :span="8">
-            <div>
-              <a-radio-group default-value="a" button-style="solid">
-                <a-radio-button value="a">
-                  日视图
-                </a-radio-button>
-                <a-radio-button value="b">
-                  月视图
-                </a-radio-button>
-
-              </a-radio-group>
-
-              <a-date-picker @change="onChange" style="margin-left: 5px"/>
-            </div>
-          </a-col>
-
-
-          <a-col :span="8">
-            <div>
-              <a-tree-select
-                  v-model="value"
-                  style="width: 100%"
-                  :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                  :tree-data="treeData"
-                  placeholder="Please select"
-                  change="se"
-              >
-
-              </a-tree-select>
-            </div>
-          </a-col>
-          <a-col :span="8">
-
-          </a-col>
-        </a-row>
-
-      </div>
       <div class="salesCard">
-        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab">
-          <div class="extra-wrap" slot="tabBarExtraContent">
-            <div class="extra-item">
-              <a>{{ $t('day') }}</a>
-              <a>{{ $t('week') }}</a>
-              <a>{{ $t('month') }}</a>
-              <a>{{ $t('year') }}</a>
+        <a-tabs default-active-key="1"  size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab" style="height: 600px">
+          <a-tab-pane loading="true" tab="分公司内比" key="1" style="height: 400px">
+
+            <div style="background-color: white;">
+              <a-row>
+                <a-col :span="24">
+                  <div>
+                    <a-radio-group default-value="a" button-style="solid">
+                      <a-radio-button value="a">
+                        日详情
+                      </a-radio-button>
+                      <a-radio-button value="b">
+                        日视图
+                      </a-radio-button>
+                      <a-radio-button value="c">
+                        周视图
+                      </a-radio-button>
+
+                    </a-radio-group>
+
+                    <a-date-picker @change="onChange" style="margin-left: 5px"/>
+
+                    <a-tree-select
+                        v-model="value"
+                        style="width: 180px;margin-left: 5px"
+                        :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                        :tree-data="treeData"
+                        placeholder="请选择分公司或以下业态"
+                        change="se"
+                    >
+                    </a-tree-select>
+
+                    <a-select   style="width: 180px;margin-left: 5px"  placeholder="请选择查询类型（如接通率）" >
+                      <a-select-option value="jack">
+                        Jack
+                      </a-select-option>
+                      <a-select-option value="lucy">
+                        Lucy
+                      </a-select-option>
+                      <a-select-option value="disabled" disabled>
+                        Disabled
+                      </a-select-option>
+                      <a-select-option value="Yiminghe">
+                        yiminghe
+                      </a-select-option>
+                    </a-select>
+
+
+                  </div>
+                </a-col>
+
+              </a-row>
+
             </div>
-            <a-range-picker :style="{width: '256px'}"></a-range-picker>
-          </div>
-          <a-tab-pane loading="true" :tab="$t('sales')" key="1" style="height: 400px">
-            <a-row >
-              <a-col :span="x1" >
-                <bar :title="$ta('stores|sales|trend', 'p')" v-if=xx />
+
+
+            <a-row style="margin-top: 20px">
+              <a-col :span="16" >
+<!--                <right-jtl></right-jtl>-->
+                <bar   />
               </a-col>
-              <a-col :span="x2" v-if=xx>
-                <huanbi-bar style="width: 100%" ></huanbi-bar>
-<!--                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>-->
+
+              <a-col :span="8" >
+                <div style=" text-align: center" >
+                  <div style="margin: 40px auto  30px">
+                    <a-button type="primary" @click="showModal" style="width: 200px">
+                      生成日报
+                    </a-button>
+                    <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
+                      <p>Some contents...</p>
+                      <p>Some contents...</p>
+                      <p>Some contents...</p>
+                    </a-modal>
+                  </div>
+                </div>
+                <right-jtl style=""></right-jtl>
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane :tab="$t('visits')" key="2">
+          <a-tab-pane tab="分公司外比" key="2">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
                 <bar :title="$ta('visits|trend', 'p')"/>
@@ -188,14 +208,19 @@
         </a-card>
       </a-col>
       <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+
         <a-card :loading="loading" :bordered="false" style="margin-top: 24px;" :title="$t('proportion')">
-          <sales-data/>
+          <sales-data />
           <a-radio-group slot="extra" style="margin: -12px 0">
             <a-radio-button value="a">{{ $t('all') }}</a-radio-button>
             <a-radio-button value="b">{{ $t('online') }}</a-radio-button>
             <a-radio-button value="c">{{ $t('stores') }}</a-radio-button>
           </a-radio-group>
         </a-card>
+      </a-col>
+      <a-col :span="x2" v-if=xx>
+        <huanbi-bar style="width: 100%" ></huanbi-bar>
+        <!--                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>-->
       </a-col>
     </a-row>
   </div>
@@ -216,6 +241,7 @@ import MiniBar from '../../../components/mychart/MiniBar'
 import SecBar from '../../../components/mychart/SecBar'
 import MiniProgress from '../../../components/mychart/MiniProgress'
 import HuanbiBar from '../../../components/mychart/HuanbiBar'
+import RightJtl from '../../../components/mychart/RightJtl';
 
 
 
@@ -249,10 +275,12 @@ export default {
           "type": "接通量",
           "nowjtl": 0,
         },
+
+
         {
-          "timeSt": "08:30",
+          "timeSt": "09:30",
           "type": "电话量",
-          "nowjtl": 0.5,
+          "nowjtl": 0.3,
         },
         {
           "timeSt": "09:30",
@@ -260,10 +288,10 @@ export default {
           "nowjtl": 0.6,
         },
         {
-          "timeSt": "09:30",
+          "timeSt": "08:30",
           "type": "电话量",
-          "nowjtl": 0.3,
-        }
+          "nowjtl": 0.5,
+        },
       ],
       testtol:1,
       //接通率其他数据
@@ -483,6 +511,7 @@ export default {
     },5500)
   },
   components: {
+    RightJtl,
     Trend,
     SalesData,
     HotSearch,
