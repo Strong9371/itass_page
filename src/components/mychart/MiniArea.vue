@@ -1,9 +1,17 @@
 <template>
   <div class="mini-chart">
     <div class="chart-content" :style="{height: 46}">
-      <v-chart :force-fit="true" :height="height" :data="jietonglv" :padding="[36, -10, 18, -10]" >
-        <v-tooltip />
-        <v-smooth-area position="timeSt*nowjtl"  color="type"/>
+<!--      <v-chart :force-fit="true" :height="height" :data="jietonglv" :padding="[36, -10, 18, -10]" >-->
+<!--        <v-tooltip />-->
+<!--        <v-smooth-area position="timeSt*nowjtl"  color="type"/>-->
+<!--      </v-chart>-->
+
+      <v-chart :forceFit="true" :height="height" :data="jietonglv"  :padding="[36, -10, 18, -10]" :scale="scale">
+        <v-tooltip :crosshairs="crosshairs" />
+<!--        <v-axis dataKey="nowjtl" />-->
+<!--        <v-legend />-->
+        <v-line position="timeSt*nowjtl" :size="2" color="type" />
+        <v-area position="timeSt*nowjtl" color="type" />
       </v-chart>
     </div>
   </div>
@@ -47,7 +55,8 @@ export default {
       data:[],
       scale,
       tooltip,
-      height: 110
+      height: 110,
+      corsshairs:{ type: 'line' },
     }
   }
 }

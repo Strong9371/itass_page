@@ -4,7 +4,7 @@
     <a-row style="margin-top: 0" :gutter="[24, 24]" >
       <!-- 接通率 -->
       <a-col :sm="24" :md="12" :xl="4">
-        <chart-card :loading="loading" :title="'武汉'+$t('nowjietonglv')" :total="testtol">
+        <chart-card :loading="loading" :title="$t('nowjietonglv')" :total="testtol">
           <!--          <a-tooltip :title="$t('introduce01')" slot="action">-->
           <!--            <a-icon type="info-circle-o"/>-->
           <!--          </a-tooltip>-->
@@ -37,23 +37,23 @@
 
       <!-- 接通量 -->
       <a-col :sm="24" :md="12" :xl="5">
-        <chart-card :loading="loading" :title=" $t('nowjietongliang')" :total="myall.alldata + '  通'">
+        <chart-card :loading="loading" :title=" $t('nowjietongliang')" :total="myall.alldata + '/450' + '=45%'">
           <a-tooltip :title="$t('introduce02') " slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
           <div>
             <double-bar :jietongliang="jietongliang"/>
           </div>
-          <div slot="footer"><span>{{ $t('average') }} {{ myall.alldata }} / 369 通</span>
-<!--            <trend style="margin-left: 1rem" :term="$t('secreach')" :target="100" :value="60" :scale="0"/>-->
-            <trend  style="margin-left: 1rem" :term="$t('reach')" :percent="12" :is-increase="true" :scale="0" />
+          <div slot="footer">
+            <span >{{ $t('average') }} 45%</span>
+            <trend style="margin-left: 1rem"  :percent="12" :is-increase="true" :scale="0" />
           </div>
         </chart-card>
       </a-col>
 
       <!-- 30/60秒时长 -->
       <a-col :sm="24" :md="12" :xl="5">
-        <chart-card :loading="loading" :title="$t('secondliang')" :total="secliang + '通'">
+        <chart-card :loading="loading" :title="$t('secondliang')" :total="secliang ">
                     <a-tooltip :title="$t('introduce05')" slot="action">
                       <a-icon type="info-circle-o"/>
                     </a-tooltip>
@@ -62,7 +62,7 @@
             <sec-bar :secdata="secdata"/>
           </div>
           <div slot="footer">
-            <span>{{ $t('average') }} 1900/1420 通</span>
+            <span>{{ $t('average') }} 1900/1420 </span>
             <trend style="margin-left: 1rem" :term="$t('reach')" :target="100" :value="60" :scale="0"/>
             /
             <trend   :percent="12" :is-increase="true" :scale="0" />
@@ -74,7 +74,7 @@
 
       <!-- 时长 -->
       <a-col :sm="24" :md="12" :xl="5">
-        <chart-card :loading="loading" :title="$t('nowshichang')" total="189,345 秒">
+        <chart-card :loading="loading" :title="$t('nowshichang')" total="189,345">
           <a-tooltip :title="$t('introduce03')" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
@@ -82,7 +82,7 @@
             <mini-bar :tonghuatime="tonghuatime"/>
           </div>
           <div slot="footer">
-            <span>{{ $t('average') }} 265,256秒</span>
+            <span>{{ $t('average') }} 265,256</span>
 <!--             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />-->
             <trend style="margin-left: 1rem" :term="$t('reach')" :target="100" :value="60" :scale="0"/>
           </div>
@@ -91,7 +91,7 @@
 
       <!-- 费用 -->
       <a-col :sm="24" :md="12" :xl="5">
-        <chart-card :loading="loading" :title="$t('nowmoney')" total="¥ 638 元">
+        <chart-card :loading="loading" :title="$t('nowmoney')" total="¥ 638">
           <a-tooltip :title="$t('introduce04')" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
@@ -99,7 +99,7 @@
             <mini-progress :target="phonecharge.target" :residue="phonecharge.residue"/>
           </div>
           <div slot="footer" style="white-space: nowrap;overflow: hidden">
-            <span>{{ $t('average') }} 652元</span>
+            <span>{{ $t('average') }} 652</span>
 <!--             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />-->
             <trend style="margin-left: 1rem;" :term="$t('reach')" :target="100" :value="46" :scale="0"/>
           </div>
@@ -246,88 +246,23 @@ export default {
       jietonglv: [
         {
           "timeSt": "08:30",
-          "type": "接通率",
+          "type": "接通量",
           "nowjtl": 0,
         },
         {
           "timeSt": "08:30",
-          "type": "接通率",
-          "nowjtl": 0,
+          "type": "电话量",
+          "nowjtl": 0.5,
         },
         {
-          "timeSt": "09:00",
-          "type": "接通率",
-          "nowjtl": 0.45,
+          "timeSt": "09:30",
+          "type": "接通量",
+          "nowjtl": 0.6,
         },
         {
-          "timeSt": "09:00",
-          "type": "融资",
-          "nowjtl": 0.46,
-        },
-        {
-          "timeSt": "09:00",
-          "type": "融资1",
-          "nowjtl": 0.23,
-        },
-        {
-          "timeSt": "09:00",
-          "type": "融资2",
-          "nowjtl": 0.34,
-        },
-        {
-          "timeSt": "09:00",
-          "type": "融资3",
-          "nowjtl": 0.41,
-        },
-        {
-          "timeSt": "9:30",
-          "type": "接通率",
-          "nowjtl": 0.62,
-        },
-        {
-          "timeSt": "10:00",
-          "type": "接通率",
-          "nowjtl": 0.27
-        },
-        {
-          "timeSt": "10:30",
-          "type": "接通率",
-          "nowjtl": 0.38
-        },
-        {
-          "timeSt": "11:30",
-          "type": "接通率",
-          "nowjtl": 0.25
-        },
-        {
-          "timeSt": "18:30",
-          "type": "接通率",
-          "nowjtl": 0.37
-        },
-        {
-          "timeSt": "19:00",
-          "type": "接通率",
-          "nowjtl": 0.45
-        },
-        {
-          "timeSt": "19:30",
-          "type": "接通率",
-          "nowjtl": 0.32
-        },
-        {
-          "timeSt": "20:00",
-          "type": "接通率",
-          "nowjtl": 0.27
-        },
-        {
-          "timeSt": "20:30",
-          "type": "接通率",
-          "nowjtl": 0.38
-        },
-        {
-          "timeSt": "21:30",
-          "type": "接通率",
-          "nowjtl": 0.25
+          "timeSt": "09:30",
+          "type": "电话量",
+          "nowjtl": 0.3,
         }
       ],
       testtol:1,
