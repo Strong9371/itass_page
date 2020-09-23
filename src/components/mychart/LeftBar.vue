@@ -35,7 +35,6 @@ dv.transform({
 });
 const data = dv.rows;
 
-console.log(data)
 export default {
   data() {
     return {

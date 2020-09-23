@@ -62,7 +62,6 @@ export default {
   },
   methods:{
     cl(){
-      console.log("lll")
     }
   },
 
@@ -75,7 +74,6 @@ export default {
       // });
     },3000)
 
-    console.log(this.data)
   }
 }
 </script>

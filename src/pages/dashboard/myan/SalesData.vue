@@ -35,7 +35,6 @@ dv.transform({
   as: 'percent'
 })
 const data = dv.rows
-
 export default {
   name: 'SalesData',
   data () {
@@ -49,7 +48,7 @@ export default {
       },
       labelConfig: ['percent', {
         formatter: (val, item) => {
-          return item.point.item + ': ' + val
+          return item.point.item + ': ' + item.point.count
         }
       }]
     }
