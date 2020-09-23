@@ -1,7 +1,7 @@
 <template>
   <div class="analysis">
 
-    <a-row style="margin-top: 0" :gutter="[24, 24]" >
+    <a-row  :gutter="[24, 24]" >
       <!-- 接通率 -->
       <a-col :sm="24" :md="12" :xl="4">
         <chart-card :loading="loading" :title="$t('nowjietonglv')" :total="testtol">
@@ -90,31 +90,45 @@
       </a-col>
 
       <!-- 费用 -->
-      <a-col :sm="24" :md="12" :xl="5">
+      <a-col :sm="24" :md="12" :xl="5"  >
         <chart-card :loading="loading" :title="$t('nowmoney')" total="¥ 638">
           <a-tooltip :title="$t('introduce04')" slot="action">
             <a-icon type="info-circle-o"/>
           </a-tooltip>
-          <div>
-            <mini-progress :target="phonecharge.target" :residue="phonecharge.residue"/>
+          <div  >
+            <mini-progress :target="phonecharge.target" :residue="phonecharge.residue" />
+
           </div>
           <div slot="footer" style="white-space: nowrap;overflow: hidden">
             <span>{{ $t('average') }} 652</span>
-<!--             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />-->
+
             <trend style="margin-left: 1rem;" :term="$t('reach')" :target="100" :value="46" :scale="0"/>
           </div>
         </chart-card>
       </a-col>
     </a-row>
 
-    <a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
+    <a-card :loading="loading" style="margin-top: 24px;height:1100px" :bordered="false" :body-style="{padding: '24px'}">
       <div class="salesCard">
-        <a-tabs default-active-key="1"  size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab" style="height: 600px">
-          <a-tab-pane loading="true" tab="分公司内比" key="1" style="height: 400px">
+        <a-tabs default-active-key="1"  size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab" style="height: 1100px">
 
-            <div style="background-color: white;">
-              <a-row>
-                <a-col :span="24">
+          <div class="extra-wrap" slot="tabBarExtraContent">
+            <a-button  type="primary" @click="showModal" style="width: 180px;margin-right: 100px">
+              生成日报
+            </a-button>
+            <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </a-modal>
+          </div>
+
+
+          <a-tab-pane loading="true" tab="分公司内比" key="1" >
+
+            <div style="margin-top: -10px">
+              <a-row >
+                <a-col :span="20">
                   <div>
                     <a-radio-group default-value="a" button-style="solid">
                       <a-radio-button value="a">
@@ -140,61 +154,45 @@
                         change="se"
                     >
                     </a-tree-select>
-
-                    <a-select   style="width: 180px;margin-left: 5px"  placeholder="请选择查询类型（如接通率）" >
-                      <a-select-option value="jack">
-                        Jack
-                      </a-select-option>
-                      <a-select-option value="lucy">
-                        Lucy
-                      </a-select-option>
-                      <a-select-option value="disabled" disabled>
-                        Disabled
-                      </a-select-option>
-                      <a-select-option value="Yiminghe">
-                        yiminghe
-                      </a-select-option>
-                    </a-select>
-
-
+                    <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
+                      查询
+                    </a-button>
                   </div>
                 </a-col>
-
               </a-row>
-
             </div>
 
 
             <a-row style="margin-top: 20px">
-              <a-col :span="16" >
+              <a-col :span="18" >
 <!--                <right-jtl></right-jtl>-->
                 <left-bar   />
               </a-col>
 
-              <a-col :span="8" >
-                <div style=" text-align: center" >
-                  <div style="margin: 40px auto  30px">
-                    <a-button type="primary" @click="showModal" style="width: 200px">
-                      生成日报
-                    </a-button>
-                    <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
-                      <p>Some contents...</p>
-                      <p>Some contents...</p>
-                      <p>Some contents...</p>
-                    </a-modal>
-                  </div>
-                </div>
-                <right-jtl style=""></right-jtl>
+              <a-col :span="6" >
 
-                <div style=" text-align: center" >
-                  <div style="margin: -100px auto  30px">
-                    接通率
-                  </div>
-                </div>
+                <right-jtl ></right-jtl>
 
+<!--                <div style=" text-align: center" >-->
+<!--                  <h1 style="margin: -110px auto ;font-weight: bolder">-->
+<!--                    分公司接通率-->
+<!--                  </h1>-->
+<!--                </div>-->
+              </a-col>
+
+              <a-col :span="12" >
+                <!--                <right-jtl></right-jtl>-->
+                <left-bardw   />
+              </a-col>
+
+              <a-col :span="12">
+
+                <right-jtldw ></right-jtldw>
 
               </a-col>
+
             </a-row>
+
           </a-tab-pane>
           <a-tab-pane tab="分公司外比" key="2">
             <a-row>
@@ -237,7 +235,7 @@
 <script>
 import ChartCard from '../../../components/card/ChartCard'
 import Bar from '../../../components/chart/Bar'
-import RankingList from '../../../components/chart/RankingList'
+import RankingList from '../../../components/mychart/RankingList'
 import HotSearch from './HotSearch'
 import SalesData from './SalesData'
 import Trend from '../../../components/chart/Trend'
@@ -251,8 +249,8 @@ import MiniProgress from '../../../components/mychart/MiniProgress'
 import HuanbiBar from '../../../components/mychart/HuanbiBar'
 import RightJtl from '../../../components/mychart/RightJtl';
 import LeftBar from '../../../components/mychart/LeftBar';
-
-
+import LeftBardw from '../../../components/mychart/LeftBardw';
+import RightJtldw from '../../../components/mychart/RightJtldw';
 
 const rankList = []
 
@@ -533,7 +531,9 @@ export default {
     DoubleBar,
     ChartCard,
     HuanbiBar,
-    LeftBar
+    LeftBar,
+    LeftBardw,
+    RightJtldw
 
   }
 }

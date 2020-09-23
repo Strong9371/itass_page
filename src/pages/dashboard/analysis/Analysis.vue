@@ -27,13 +27,8 @@
 					</a-form>
 				</a-col>
 			</a-row>
-
-
-
-
-
 		</div>
-		<a-row style="margin-top: 0" :gutter="[24, 24]">
+		<a-row  :gutter="[24, 24]">
 
 			<a-col :sm="24" :md="12" :xl="6">
 				<chart-card :loading="loading" :title="$t('totalSales')" total="￥ 189,345">

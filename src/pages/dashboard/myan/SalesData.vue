@@ -3,7 +3,7 @@
     <v-chart :forceFit="true" :height="height" :data="data" :scale="scale">
       <v-tooltip :showTitle="false" dataKey="item*percent" />
       <v-axis />
-      <v-legend dataKey="item" position="right" :offsetX="-140"/>
+      <v-legend  dataKey="item" position="right" :offsetX="-140"/>
       <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
       <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
     </v-chart>
@@ -35,6 +35,7 @@ dv.transform({
   as: 'percent'
 })
 const data = dv.rows
+
 export default {
   name: 'SalesData',
   data () {
