@@ -168,7 +168,7 @@
             <a-row style="margin-top: 20px">
               <a-col :span="16" >
 <!--                <right-jtl></right-jtl>-->
-                <bar   />
+                <left-bar   />
               </a-col>
 
               <a-col :span="8" >
@@ -185,6 +185,14 @@
                   </div>
                 </div>
                 <right-jtl style=""></right-jtl>
+
+                <div style=" text-align: center" >
+                  <div style="margin: -100px auto  30px">
+                    接通率
+                  </div>
+                </div>
+
+
               </a-col>
             </a-row>
           </a-tab-pane>
@@ -242,6 +250,7 @@ import SecBar from '../../../components/mychart/SecBar'
 import MiniProgress from '../../../components/mychart/MiniProgress'
 import HuanbiBar from '../../../components/mychart/HuanbiBar'
 import RightJtl from '../../../components/mychart/RightJtl';
+import LeftBar from '../../../components/mychart/LeftBar';
 
 
 
@@ -523,7 +532,8 @@ export default {
     MiniArea,
     DoubleBar,
     ChartCard,
-    HuanbiBar
+    HuanbiBar,
+    LeftBar
 
   }
 }
