@@ -5,7 +5,7 @@
       <v-chart :forceFit="true" :height="height" :data="data" >
         <v-coord type="rect" direction="LB" />
         <v-tooltip />
-          <v-legend  :clickable=false />
+          <v-legend   />
         <v-axis dataKey="State" :label="label" />
         <v-stack-bar position="State*人口数量" color="年龄段" />
       </v-chart>

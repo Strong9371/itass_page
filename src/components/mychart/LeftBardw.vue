@@ -70,38 +70,6 @@ const data = [{
   country: '加拿大',
   type: '2016 年耕地总面积',
   value: 46.9
-}, {
-  country: '巴西',
-  type: '2016 年转基因种植面积',
-  value: 49.1
-}, {
-  country: '巴西',
-  type: '2016 年耕地总面积',
-  value: 73.2
-}, {
-  country: '中国',
-  type: '2016 年转基因种植面积',
-  value: 2.8
-}, {
-  country: '中国',
-  type: '2016 年耕地总面积',
-  value: 108.4
-}, {
-  country: '美国',
-  type: '2016 年转基因种植面积',
-  value: 72.9
-}, {
-  country: '美国',
-  type: '2016 年耕地总面积',
-  value: 165.2
-}, {
-  country: '印度',
-  type: '2016 年转基因种植面积',
-  value: 49.1
-}, {
-  country: '印度',
-  type: '2016 年耕地总面积',
-  value: 175.4
 }];
 
 const scale = [{

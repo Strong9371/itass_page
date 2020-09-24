@@ -1,22 +1,25 @@
 <template>
   <div class="bar">
-    <h1 style="font-weight: bolder;margin-left: 40px">分公司30/60秒量（单位：通）</h1>
+    <h1 style="font-weight: bolder">分公司费用（单位：元）</h1>
 
     <div class="chart">
     <v-chart :forceFit="true" :height="height" :data="data" :scale="scale">
       <v-tooltip :showTitle="false" dataKey="item*percent" />
       <v-axis />
-      <v-legend  dataKey="item" position="right" :offsetX="-180"/>
+      <v-legend  dataKey="item" />
+
+<!--      <v-legend  dataKey="item" position="right" :offsetX="-180"/>-->
+
       <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
       <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
     </v-chart>
   </div>
 
-    <p style="position:absolute;right: 100px;bottom: 180px">68</p>
-    <p style="position:absolute;right: 100px;bottom: 158px">68</p>
-    <p style="position:absolute;right: 100px;bottom: 136px">68</p>
-    <p style="position:absolute;right: 100px;bottom: 114px">68</p>
-    <p style="position:absolute;right: 100px;bottom: 92px">68</p>
+<!--    <p style="position:absolute;right: 100px;bottom: 180px">68</p>-->
+<!--    <p style="position:absolute;right: 100px;bottom: 158px">68</p>-->
+<!--    <p style="position:absolute;right: 100px;bottom: 136px">68</p>-->
+<!--    <p style="position:absolute;right: 100px;bottom: 114px">68</p>-->
+<!--    <p style="position:absolute;right: 100px;bottom: 92px">68</p>-->
 
   </div>
 </template>
