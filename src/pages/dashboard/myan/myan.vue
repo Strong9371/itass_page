@@ -135,10 +135,10 @@
                         日详情
                       </a-radio-button>
                       <a-radio-button value="b">
-                        日视图
+                        日环比
                       </a-radio-button>
                       <a-radio-button value="c">
-                        周视图
+                        周环比
                       </a-radio-button>
 
                     </a-radio-group>
@@ -162,30 +162,24 @@
               </a-row>
             </div>
 
-
-            <a-row style="margin-top: 20px">
-              <a-col :span="18" >
-<!--                <right-jtl></right-jtl>-->
+<!--            日详情-->
+            <a-row style="margin-top: 20px"  v-if="false">
+              <a-col :span="16" >
                 <left-bar   />
+
               </a-col>
 
-              <a-col :span="6" >
+              <a-col :span="8" >
 
                 <right-jtl ></right-jtl>
 
-<!--                <div style=" text-align: center" >-->
-<!--                  <h1 style="margin: -110px auto ;font-weight: bolder">-->
-<!--                    分公司接通率-->
-<!--                  </h1>-->
-<!--                </div>-->
               </a-col>
 
-              <a-col :span="12" >
-                <!--                <right-jtl></right-jtl>-->
+              <a-col :span="16" style="margin-top: -50px">
                 <left-bardw   />
               </a-col>
 
-              <a-col :span="12">
+              <a-col :span="8" style="margin-top: -50px">
 
                 <right-jtldw ></right-jtldw>
 
@@ -193,11 +187,89 @@
 
             </a-row>
 
+
+<!--            日环比-->
+            <a-row style="margin-top: 20px" >
+              <a-col :span="12" >
+
+                <rihuanbi-lu   />
+              </a-col>
+
+              <a-col :span="12" >
+
+                <left-bar   />
+
+              </a-col>
+
+              <a-col :span="12" >
+                <left-bar   />
+              </a-col>
+
+              <a-col :span="12" >
+
+                <left-bar   />
+
+              </a-col>
+
+            </a-row>
+
+            <!--            周环比-->
+            <a-row style="margin-top: 20px" >
+              <a-col :span="12" >
+
+                <rihuanbi-lu   />
+              </a-col>
+
+              <a-col :span="12" >
+
+                <left-bar   />
+
+              </a-col>
+
+              <a-col :span="12" >
+                <left-bar   />
+              </a-col>
+
+              <a-col :span="12" >
+
+                <left-bar   />
+
+              </a-col>
+
+            </a-row>
+
           </a-tab-pane>
           <a-tab-pane tab="分公司外比" key="2">
+
+            <div style="margin-top: -10px">
+              <a-row >
+                <a-col :span="20">
+                  <div>
+                    <a-radio-group default-value="a" button-style="solid">
+
+                      <a-radio-button value="b">
+                        日环比
+                      </a-radio-button>
+                      <a-radio-button value="c">
+                        周环比
+                      </a-radio-button>
+
+                    </a-radio-group>
+
+                    <a-date-picker @change="onChange" style="margin-left: 5px"/>
+
+                    <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
+                      查询
+                    </a-button>
+                  </div>
+                </a-col>
+              </a-row>
+            </div>
+
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :title="$ta('visits|trend', 'p')"/>
+                <huanbi-bar/>
+                <bar :title="$ta('visits|trend', 'p')" v-if="false"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList"/>
@@ -207,28 +279,7 @@
         </a-tabs>
       </div>
     </a-card>
-    <a-row style="margin: 0 -12px">
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px" :title="$t('search')">
-          <hot-search/>
-        </a-card>
-      </a-col>
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
 
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px;" :title="$t('proportion')">
-          <sales-data />
-          <a-radio-group slot="extra" style="margin: -12px 0">
-            <a-radio-button value="a">{{ $t('all') }}</a-radio-button>
-            <a-radio-button value="b">{{ $t('online') }}</a-radio-button>
-            <a-radio-button value="c">{{ $t('stores') }}</a-radio-button>
-          </a-radio-group>
-        </a-card>
-      </a-col>
-      <a-col :span="x2" v-if=xx>
-        <huanbi-bar style="width: 100%" ></huanbi-bar>
-        <!--                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList"/>-->
-      </a-col>
-    </a-row>
   </div>
 </template>
 
@@ -236,8 +287,6 @@
 import ChartCard from '../../../components/card/ChartCard'
 import Bar from '../../../components/chart/Bar'
 import RankingList from '../../../components/mychart/RankingList'
-import HotSearch from './HotSearch'
-import SalesData from './SalesData'
 import Trend from '../../../components/chart/Trend'
 
 //我的插件
@@ -251,6 +300,9 @@ import RightJtl from '../../../components/mychart/RightJtl';
 import LeftBar from '../../../components/mychart/LeftBar';
 import LeftBardw from '../../../components/mychart/LeftBardw';
 import RightJtldw from '../../../components/mychart/RightJtldw';
+
+//日环比
+import RihuanbiLu from '../../../components/mychart/RihuanbiLu'
 
 const rankList = []
 
@@ -520,8 +572,6 @@ export default {
   components: {
     RightJtl,
     Trend,
-    SalesData,
-    HotSearch,
     RankingList,
     Bar,
     MiniProgress,
@@ -533,7 +583,8 @@ export default {
     HuanbiBar,
     LeftBar,
     LeftBardw,
-    RightJtldw
+    RightJtldw,
+    RihuanbiLu,
 
   }
 }
