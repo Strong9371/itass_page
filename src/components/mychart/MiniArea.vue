@@ -41,7 +41,7 @@ export default {
       scale,
       tooltip,
       height: 110,
-      corsshairs:{ type: 'line' },
+      crosshairs:{ type: 'line' },
     }
   }
 }

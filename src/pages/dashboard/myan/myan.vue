@@ -46,7 +46,7 @@
           </div>
           <div slot="footer">
             <span >{{ $t('average') }} 45%</span>
-            <trend style="margin-left: 1rem"  :percent="12" :is-increase="true" :scale="0" />
+            <trend style="margin-left: 1rem" :term="$t('reach')"  :percent="12" :is-increase="true" :scale="0" />
           </div>
         </chart-card>
       </a-col>
@@ -130,7 +130,7 @@
               <a-row >
                 <a-col :span="20">
                   <div>
-                    <a-radio-group default-value="a" button-style="solid">
+                    <a-radio-group default-value="a" button-style="solid" @change="typeChange">
                       <a-radio-button value="a">
                         日详情
                       </a-radio-button>
@@ -163,7 +163,7 @@
             </div>
 
 <!--            日详情-->
-            <a-row style="margin-top: 20px"  v-if="false">
+            <a-row style="margin-top: 20px"  v-if="typeValue == 'a'">
               <a-col :span="16" >
                 <left-bar   />
 
@@ -189,7 +189,7 @@
 
 
 <!--            日环比-->
-            <a-row style="margin-top: 20px" >
+            <a-row style="margin-top: 20px"   v-if="typeValue == 'b'">
               <a-col :span="12" >
 
                 <rihuanbi-lu   />
@@ -202,7 +202,7 @@
               </a-col>
 
               <a-col :span="12" >
-                <left-bar   />
+                <double-barld   />
               </a-col>
 
               <a-col :span="12" >
@@ -214,7 +214,7 @@
             </a-row>
 
             <!--            周环比-->
-            <a-row style="margin-top: 20px" >
+            <a-row style="margin-top: 20px"   v-if="typeValue == 'c'">
               <a-col :span="12" >
 
                 <rihuanbi-lu   />
@@ -303,6 +303,7 @@ import RightJtldw from '../../../components/mychart/RightJtldw';
 
 //日环比
 import RihuanbiLu from '../../../components/mychart/RihuanbiLu'
+import DoubleBarld from '../../../components/mychart/DoubleBarld.vue'
 
 const rankList = []
 
@@ -534,7 +535,11 @@ export default {
       value: undefined,
       x1:12,
       x2:12,
-      xx:true
+      xx:true,
+      visible: false,
+
+    //  视图切换value
+      typeValue:'a',
 
     }
   },
@@ -549,12 +554,23 @@ export default {
     handleChange(value) {
       console.log(`selected ${value}`);
     },
+    typeChange(res){
+      console.log(res.target.value)
+      this.typeValue = res.target.value
+    },
     onChange(date, dateString) {
       console.log(date, dateString);
     },
     changeTab(res){
       console.log(res)
-    }
+    },
+    showModal() {
+      this.visible = true;
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible = false;
+    },
 
   },
   created() {
@@ -585,7 +601,7 @@ export default {
     LeftBardw,
     RightJtldw,
     RihuanbiLu,
-
+    DoubleBarld
   }
 }
 </script>

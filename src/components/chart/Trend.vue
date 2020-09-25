@@ -12,7 +12,7 @@ export default {
   props: {
     term: {
       type: String,
-      required: true
+      required: false
     },
     target: {
       type: Number,
