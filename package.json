@@ -1,8 +1,9 @@
 {
-  "name": "vue-antd-admin",
+  "name": "DGG",
   "version": "0.5.0",
-  "homepage": "https://iczer.github.io/vue-antd-admin",
   "private": true,
+  "homepage": "https://iczer.github.io/vue-antd-admin",
+
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

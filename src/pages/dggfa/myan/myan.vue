@@ -164,7 +164,7 @@
 
 <!--            日详情-->
             <a-row style="margin-top: 20px"  v-if="typeValue == 'a'">
-              <a-col :span="16" >
+              <a-col :span="16" style="z-index: 9999">
                 <left-bar  title="分公司接通量（单位：通)" />
 
               </a-col>

@@ -25,6 +25,21 @@ const options = {
 			component: TabsView,
 			redirect: '/login',
 			children: [{
+				path: 'dggfa',
+				name: '首页',
+				meta: {
+					icon: 'line-chart'
+				},
+				component: BlankView,
+				children: [{
+					path: 'myan',
+					name: '全局分析',
+					meta: {
+						icon: 'dashboard'
+					},
+					component: () => import('@/pages/dashboard/myan'),
+				}]
+			},{
 					path: 'dashboard',
 					name: 'Dashboard',
 					meta: {
@@ -34,6 +49,7 @@ const options = {
 					children: [{
 								path: 'myan',
 								name: '全局分析',
+
 								component: () => import('@/pages/dashboard/myan'),
 							},
 						{

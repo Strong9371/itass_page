@@ -7,6 +7,10 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
     router: 'root',
     children: [
       {
+        router: 'dggfa',
+        children: ['myan'],
+      },
+      {
         router: 'dashboard',
         children: ['workplace', 'analysis'],
       },

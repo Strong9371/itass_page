@@ -1,24 +1,12 @@
 <template>
-  <div class="bar">
-    <h1 style="font-weight: bolder;margin-left: 90px">分公司费用（单位：元）</h1>
-
-    <div class="chart" style="margin-top: 15px">
+  <div style="">
     <v-chart :forceFit="true" :height="height" :data="data" :scale="scale">
       <v-tooltip :showTitle="false" dataKey="item*percent" />
       <v-axis />
-<!--      <v-legend  dataKey="item" />-->
-
-      <v-legend  dataKey="item" position="right" :offsetX="-120"/>
-
+      <v-legend  dataKey="item" position="right" :offsetX="-140"/>
       <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
       <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
     </v-chart>
-  </div>
-    <p style="position:absolute;right: 50px;bottom: 180px">68</p>
-    <p style="position:absolute;right: 50px;bottom: 158px">68</p>
-    <p style="position:absolute;right: 50px;bottom: 136px">68</p>
-    <p style="position:absolute;right: 50px;bottom: 114px">68</p>
-    <p style="position:absolute;right: 50px;bottom: 92px">68</p>
   </div>
 </template>
 
@@ -53,7 +41,7 @@ export default {
     return {
       data,
       scale,
-      height: 350,
+      height: 385,
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
@@ -68,10 +56,6 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.bar{
-  position: relative;
-  .chart{
-  }
-}
+<style scoped>
+
 </style>

@@ -18,6 +18,14 @@ const routerMap = {
     redirect: '/login',
     component: view.tabs
   },
+  dggfa:{
+    name: '首页',
+    component: view.blank
+  },
+  myan: {
+    name: '全局分析',
+    component: () => import('@/pages/dggfa/myan')
+  },
   dashboard: {
     name: 'Dashboard',
     component: view.blank

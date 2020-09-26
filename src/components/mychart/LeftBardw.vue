@@ -3,8 +3,8 @@
     <h1 style="font-weight: bolder">分公司30/60秒量（单位：通）</h1>
 
     <div class="chart">
-      <v-chart :forceFit="true" :height="400" :data="data" padding="auto" :scale="scale">
-        <v-tooltip/>
+      <v-chart :forceFit="true" :height="300" :data="data" padding="auto" :scale="scale">
+        <v-tooltip />
         <v-axis dataKey="value" :show="false"/>
         <v-legend position='top-center'></v-legend>
         <v-coord direction='LB' type='rect'/>
@@ -23,59 +23,59 @@
 
 <script>
 const data = [{
-  country: '乌拉圭',
-  type: '2016 年转基因种植面积',
-  value: 1.3
+  country: '分公司',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '乌拉圭',
-  type: '2016 年耕地总面积',
-  value: 1.8
+  country: '分公司',
+  type: '60s接通量',
+  value: 38
+},{
+  country: '融资',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '巴拉圭',
-  type: '2016 年转基因种植面积',
-  value: 3.6
+  country: '融资',
+  type: '60s接通量',
+  value: 38
+},{
+  country: '资质',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '巴拉圭',
-  type: '2016 年耕地总面积',
-  value: 5.5
+  country: '资质',
+  type: '60s接通量',
+  value: 38
+},{
+  country: '大客户',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '南非',
-  type: '2016 年转基因种植面积',
-  value: 3.7
+  country: '大客户',
+  type: '60s接通量',
+  value: 38
+},{
+  country: '创发',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '南非',
-  type: '2016 年耕地总面积',
-  value: 12.1
+  country: '创发',
+  type: '60s接通量',
+  value: 38
+},{
+  country: '法律',
+  type: '30s接通量',
+  value: 45
 }, {
-  country: '巴基斯坦',
-  type: '2016 年转基因种植面积',
-  value: 2.9
-}, {
-  country: '巴基斯坦',
-  type: '2016 年耕地总面积',
-  value: 22.0
-}, {
-  country: '阿根廷',
-  type: '2016 年转基因种植面积',
-  value: 23.8
-}, {
-  country: '阿根廷',
-  type: '2016 年耕地总面积',
-  value: 38.6
-}, {
-  country: '加拿大',
-  type: '2016 年转基因种植面积',
-  value: 11.6
-}, {
-  country: '加拿大',
-  type: '2016 年耕地总面积',
-  value: 46.9
+  country: '法律',
+  type: '60s接通量',
+  value: 38
 }];
 
 const scale = [{
   dataKey: 'value',
-  nice: false,
-  alias: '销售额（万）'
+  nice: true,
+  alias: '接通量'
 }];
 
 const eachView = function(view, facet) {
