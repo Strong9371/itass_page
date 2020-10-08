@@ -1,9 +1,11 @@
 <template>
   <div class="bar">
-    <h1 style="font-weight: bolder">分公司30/60秒量（单位：通）</h1>
-
-    <div class="chart">
-      <v-chart :forceFit="true" :height="300" :data="data" padding="auto" :scale="scale">
+    <h1 style="font-weight: bolder">
+      {{title}}
+      <h4  style="display: inline-block;margin-left: 20px;font-weight: lighter">总30s：{{s30}},  总60s：{{s60}}</h4></h1>
+    <a-empty v-if="leftdwData.length < 1"></a-empty>
+    <div class="chart" v-else>
+      <v-chart :forceFit="true" :height="280" :data="leftdwData" padding="auto" :scale="scale">
         <v-tooltip />
         <v-axis dataKey="value" :show="false"/>
         <v-legend position='top-center'></v-legend>
@@ -22,55 +24,55 @@
 </template>
 
 <script>
-const data = [{
-  country: '分公司',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '分公司',
-  type: '60s接通量',
-  value: 38
-},{
-  country: '融资',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '融资',
-  type: '60s接通量',
-  value: 38
-},{
-  country: '资质',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '资质',
-  type: '60s接通量',
-  value: 38
-},{
-  country: '大客户',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '大客户',
-  type: '60s接通量',
-  value: 38
-},{
-  country: '创发',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '创发',
-  type: '60s接通量',
-  value: 38
-},{
-  country: '法律',
-  type: '30s接通量',
-  value: 45
-}, {
-  country: '法律',
-  type: '60s接通量',
-  value: 38
-}];
+// const data = [{
+//   country: '分公司',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '分公司',
+//   type: '60s接通量',
+//   value: 38
+// },{
+//   country: '融资',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '融资',
+//   type: '60s接通量',
+//   value: 38
+// },{
+//   country: '资质',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '资质',
+//   type: '60s接通量',
+//   value: 38
+// },{
+//   country: '大客户',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '大客户',
+//   type: '60s接通量',
+//   value: 38
+// },{
+//   country: '创发',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '创发',
+//   type: '60s接通量',
+//   value: 38
+// },{
+//   country: '法律',
+//   type: '30s接通量',
+//   value: 45
+// }, {
+//   country: '法律',
+//   type: '60s接通量',
+//   value: 38
+// }];
 
 const scale = [{
   dataKey: 'value',
@@ -125,9 +127,11 @@ const eachView = function(view, facet) {
   });
 }
 export default {
+  name: 'LeftBardw',
+  props:['title','s30','s60','leftdwData'],
   data() {
     return {
-      data,
+      // data,
       scale,
       eachView
     };

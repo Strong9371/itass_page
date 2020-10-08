@@ -56,7 +56,6 @@ function parseRoutes(routesConfig, routerMap) {
  */
 function loadRoutes({router, store, i18n}, routesConfig) {
   // 如果 routesConfig 有值，则更新到本地，否则从本地获取
-  console.log(routesConfig)
   if (routesConfig) {
     store.commit('account/setRoutesConfig', routesConfig)
   } else {

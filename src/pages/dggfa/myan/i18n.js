@@ -2,13 +2,13 @@ module.exports = {
 	messages: {
 		CN: {
 			average:'日均',
-			reach:'日均比',
+			reach:'均比',
 			introduce01:'每小时电话量峰值展示',
-			nowjietonglv: '实时展示',
+			nowjietonglv: '接通量(通)',
 			averagelv:'日均接通率',
 			
-			nowjietongliang: '实时电话量(通)',
-			dianhualiang:'总电话量',
+			nowjietongliang: '实时接通率(%)',
+			dianhualiang:'日均接通',
 			amountliang:'电话拨打量',
 			jietonglv:'今日接通率',
 			introduce02:"各部门 接通量/电话量 比例",

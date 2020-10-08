@@ -37,7 +37,7 @@ const options = {
 					meta: {
 						icon: 'dashboard'
 					},
-					component: () => import('@/pages/dashboard/myan'),
+					component: () => import('@/pages/dggfa/myan'),
 				}]
 			},{
 					path: 'dashboard',

@@ -109,29 +109,32 @@ export default {
           this.logging = true
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password')
-          login(name, password).then(this.afterLogin)
+          var formdata = {};
+          formdata["name"] = name;
+          formdata["password"] = password;
+          var formdataSt = JSON.stringify(formdata)
+          login(formdataSt).then(this.afterLogin)
         }
       })
     },
     afterLogin(res) {
       this.logging = false
       const loginRes = res.data
-      if (loginRes.code >= 0) {
+      if (loginRes.state >= 0) {
         const {
           user,
-          permissions,
-          roles
+          // permissions,
+          // roles
         } = loginRes.data
         this.setUser(user)
-        this.setPermissions(permissions)
-        this.setRoles(roles)
+        // this.setPermissions(permissions)
+        // this.setRoles(roles)
         setAuthorization({
           token: loginRes.data.token,
-          expireAt: new Date(loginRes.data.expireAt)
+          expireAt: new Date(new Date().getTime() + 240 * 60 * 1000)
         })
         // 获取路由配置
         getRoutesConfig().then(result => {
-          console.log(result)
           const routesConfig = result.data.data
           loadRoutes({
             router: this.$router,

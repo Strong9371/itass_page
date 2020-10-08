@@ -1,6 +1,6 @@
 <template>
   <a-layout :class="['admin-layout', 'beauty-scroll']">
-    <drawer v-if="isMobile" v-model="drawerOpen">
+    <drawer v-if="isMobile" v-model="drawerOpen" >
       <side-menu :theme="theme.mode" :menuData="menuData" :collapsed="false" :collapsible="false" @menuSelect="onMenuSelect"/>
     </drawer>
     <side-menu :class="[fixedSideBar ? 'fixed-side' : '']" :theme="theme.mode" v-else-if="layout === 'side' || layout === 'mix'" :menuData="sideMenuData" :collapsed="collapsed" :collapsible="true" />
@@ -12,7 +12,7 @@
       <setting />
     </drawer>
     <a-layout class="admin-layout-main beauty-scroll">
-      <admin-header :style="headerStyle" :menuData="headMenuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse"/>
+      <admin-header :style="headerStyle" :menuData="headMenuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse" style="z-index: 120"/>
       <a-layout-header v-if="fixedHeader"></a-layout-header>
       <a-layout-content class="admin-layout-content">
         <div :style="`min-height: ${minHeight}px; position: relative`">

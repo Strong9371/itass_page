@@ -12,8 +12,8 @@
 
     <a-tooltip >
       <template slot="title">
-        <pre class="tip">话费余额：{{ residue }}</pre>
-        <pre class="tip">红线阈值：{{ target }}</pre>
+<!--        <pre class="tip">话费余额：{{ residue }}</pre>-->
+        <pre class="tip">限额阈值：{{ target }}</pre>
 
       </template>
 
@@ -26,7 +26,7 @@
 <!--        <div class="progress" :style="'{backgroundColor:' + (1?'red;':'blue;') +  'width:' + percent + '%; height: height}'" />-->
 
 <!--        <div class="progress"  :style="'background-color: red;width: 30% ;height:8px'"  />-->
-        <div class="progress"  :style="'background-color: ' + (residue <= target ?'red':'green')  + ';width: ' +  (residue/(2*target) <= 1 ? residue/(2*target) : 1 )  *100  + '% ;height:16px'"  />
+        <div class="progress"  :style="'background-color: ' + (residue <= target ?'green':'red')  + ';width: ' +  (residue/(2*target) <= 1 ? residue/(2*target) : 1 )  *100  + '% ;height:16px'"  />
 
 
       </div>
