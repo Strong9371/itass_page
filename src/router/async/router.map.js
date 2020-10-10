@@ -26,6 +26,14 @@ const routerMap = {
     name: '全局分析',
     component: () => import('@/pages/dggfa/myan')
   },
+  moneys:{
+    name: '报销',
+    component: view.blank
+  },
+  bill: {
+    name: '发票助手',
+    component: () => import('@/pages/moneys/bill')
+  },
   dashboard: {
     name: 'Dashboard',
     component: view.blank

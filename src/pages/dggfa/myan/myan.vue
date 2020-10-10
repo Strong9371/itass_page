@@ -13,9 +13,9 @@
                         @change="changeMini">
 
                 <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
-                  <a-tooltip :title="item.pname" slot="action">
+<!--                  <a-tooltip :title="item.pname" slot="action">-->
                     {{ item.pname }}
-                  </a-tooltip>
+<!--                  </a-tooltip>-->
                 </a-select-option>
               </a-select>
             </div>
@@ -23,8 +23,8 @@
             <div >
               <mini-area v-if="loadMini" :jietonglv="v1data"/>
             </div>
-            <div slot="footer">{{ $t('dianhualiang') }}<span> {{ (otherDate.v1_2)}} </span>
-              <trend style="margin-left: 1.5rem" :term="$t('reach')"  :percent="otherDate.v1_3" :is-increase="true" :scale="0"  v-if=" otherDate.v1_3 >= 100"/>
+            <div v-if="loadMini" slot="footer">{{ $t('dianhualiang') }}<span> {{ (otherDate.v1_2)}} </span>
+              <trend  style="margin-left: 1.5rem" :term="$t('reach')"  :percent="otherDate.v1_3" :is-increase="true" :scale="0"  v-if=" otherDate.v1_3 >= 100"/>
               <trend style="margin-left: 1.5rem"  :term="$t('reach')" :target="100" :value=" 100 - otherDate.v1_3 " :scale="0"  v-else/>
             </div>
 
@@ -42,7 +42,7 @@
           <div>
             <double-bar v-if="loadMini" :jietongliang="v2data"/>
           </div>
-          <div slot="footer">
+          <div v-if="loadMini" slot="footer">
             <span >{{ $t('average') }} {{otherDate.v2_2}} %</span>
             <trend style="margin-left: 1.5rem" :term="$t('reach')"  :percent="otherDate.v2_3" :is-increase="true" :scale="0"  v-if=" otherDate.v2_3 >= 100"/>
             <trend style="margin-left: 1.5rem"  :term="$t('reach')" :target="100" :value=" 100 - otherDate.v2_3 " :scale="0"  v-else/>
@@ -60,7 +60,7 @@
           <div>
             <sec-bar v-if="loadMini" :secdata="v3data"/>
           </div>
-          <div slot="footer">
+          <div v-if="loadMini" slot="footer">
             <span>{{ $t('average') }} {{ otherDate.v3_2}}</span>
             <trend style="margin-left: 0.7rem" :term="$t('reach')"  :percent="otherDate.v3_3" :is-increase="true" :scale="0"  v-if=" otherDate.v3_3 >= 100"/>
             <trend style="margin-left: 0.7rem"  :term="$t('reach')" :target="100" :value=" 100 - otherDate.v3_3 " :scale="0"  v-else/>
@@ -82,7 +82,7 @@
           <div>
             <mini-bar v-if="loadMini" :tonghuatime="v4data"/>
           </div>
-          <div slot="footer">
+          <div v-if="loadMini" slot="footer">
             <span>{{ $t('average') }} {{ otherDate.v4_2 }}</span>
             <trend style="margin-left: 0.7rem" :term="$t('reach')"  :percent="otherDate.v4_3" :is-increase="true" :scale="0"  v-if=" otherDate.v4_3 >= 100"/>
             <trend style="margin-left: 0.7rem"  :term="$t('reach')" :target="100" :value=" 100 - otherDate.v4_3 " :scale="0"  v-else/>
@@ -97,12 +97,13 @@
             <a-icon type="info-circle-o"/>
           </a-tooltip>
 
-          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0">去设置费用明细 <a-icon type="tool" theme="twoTone"/></h1>
+          <h1 style="font-weight: bolder" v-if="(otherDate.v5_5 == 0) && (user.isAd == 0)">未设置费用明细</h1>
+          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd == 1)">去设置费用明细 <a-icon type="tool" theme="twoTone"/></h1>
 
-          <div  v-else>
+          <div  v-if="otherDate.v5_5 != 0">
             <mini-progress v-if="loadMini" :target="otherDate.v5_2" :residue="otherDate.v5_1" />
           </div>
-          <div slot="footer" style="white-space: nowrap;overflow: hidden">
+          <div v-if="loadMini" slot="footer" style="white-space: nowrap;overflow: hidden">
             <span>{{ $t('average') }} {{otherDate.v5_3}}</span>
 
             <trend style="margin-left: 0.7rem" :term="$t('reach')"  :percent="otherDate.v5_4" :is-increase="true" :scale="0"  v-if=" otherDate.v5_4 >= 100"/>
@@ -426,7 +427,6 @@ export default {
 
       formdata["viewDate"] = this.viewDate;
       var formdataSt = JSON.stringify(formdata)
-      console.log(formdata)
       getMini(formdataSt).then( (response)=> {
         const resdata =  response.data.data.mini;
 
@@ -436,6 +436,7 @@ export default {
         this.v4data = resdata.v4;
 
         const temp = resdata.otherDate
+        console.log(temp.v5_3)
         this.otherDate={
           v1_1: temp.v1_1 ? temp.v1_1 : 0,
           v1_2:temp.v1_2 ? temp.v1_2.toFixed(0) : 0,

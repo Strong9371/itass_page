@@ -39,7 +39,25 @@ const options = {
 					},
 					component: () => import('@/pages/dggfa/myan'),
 				}]
-			},{
+			},
+				{
+					path: 'moneys',
+					name: '报销',
+					meta: {
+						icon: 'money-collect'
+					},
+					component: PageView,
+					children: [{
+						path: 'bills',
+						name: '发票助手',
+						meta: {
+							icon: 'red-envelope'
+						},
+						component: () => import('@/pages/moneys/bill'),
+					}]
+				},
+
+				{
 					path: 'dashboard',
 					name: 'Dashboard',
 					meta: {
