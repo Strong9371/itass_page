@@ -1,7 +1,7 @@
 <template>
   <div class="bar">
     <h1 style="font-weight: bolder;">{{title}}
-      <h4  style="display: inline-block;margin-left: 20px;font-weight: lighter">总电话量：{{phoneAmount}},  接通量：{{phoneDone}}</h4>
+      <h4 v-if="phoneAmount"  style="display: inline-block;margin-left: 20px;font-weight: lighter">总电话量：{{phoneAmount}},  接通量：{{phoneDone}}</h4>
     </h1>
     <a-empty v-if="jtl.length < 1"></a-empty>
 
@@ -11,7 +11,9 @@
       <v-axis />
       <v-legend />
       <v-stack-bar position="时间*接通量" color="name" />
+
     </v-chart>
+
   </div>
 
   </div>
@@ -45,6 +47,8 @@ export default {
       // data,
       height: 350,
     };
+  },
+  created() {
   }
 };
 </script>

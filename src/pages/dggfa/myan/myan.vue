@@ -150,8 +150,18 @@
 
                     <a-date-picker v-if="typeValue == 'a'" :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="dateChange01" style="margin-left: 5px" :disabled-date="disableDate"/>
 
-                    <a-select :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
+                    <a-select v-show="typeValue == 'a'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
                               @change="departChange01">
+                      <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
+                        <a-tooltip :title="item.pname" slot="action">
+                          {{ item.pname }}
+                        </a-tooltip>
+                      </a-select-option>
+                    </a-select>
+
+
+                    <a-select v-show="typeValue == 'b'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
+                              @change="departChange02">
                       <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
                         <a-tooltip :title="item.pname" slot="action">
                           {{ item.pname }}
@@ -200,22 +210,22 @@
             <a-row style="margin-top: 20px"   v-if="typeValue == 'b'">
               <a-col :span="12" >
 
-                <ri-huanbi  title="接通率日环比" :jtlv="huanbiV1Data"/>
+                <ri-huanbi v-if="loadBig02"  title="接通率日环比" :huanbiV1Data="huanbiV1Data"/>
               </a-col>
 
               <a-col :span="12" >
 
-                <left-bar   />
+                <left-bar v-if="loadBig02" title="接通量部门环比"  :jtl="huanbiV2Data"  />
 
               </a-col>
 
               <a-col :span="12" >
-                <double-barld   />
+                <double-barld v-if="loadBig02"  title="接通量分类环比"  :samount="huanbiV3Data"/>
               </a-col>
 
               <a-col :span="12" >
 
-                <left-bar   />
+                <left-bar v-if="loadBig02"   title="电话时长环比"  :jtl="huanbiV4Data"/>
 
               </a-col>
 
@@ -313,6 +323,8 @@ import Timedw from '../../../components/mychart/Timedw';
 //日环比
 import RiHuanbi from '../../../components/mychart/RihuanbiLu'
 import DoubleBarld from '../../../components/mychart/DoubleBarld.vue'
+
+
 import {getAll,getMini,getBig,getDayCompare} from "@/services/user";
 
 
@@ -337,12 +349,16 @@ export default {
       rankList,
       loading: true,
       loadBig:true,
+      loadBig02 : true,
       loadMini:true,
       viewDate:"",
       bigDate:new Date(),
       bigviewDate:"",
-      paramPid:74,
-      paramPname:"武汉分公司",
+      paramPid:0,
+      paramPname:"",
+
+      paramPid02:0,
+      paramPname02:"",
       //一级部门数据
       firstDepart:[],
 
@@ -380,6 +396,9 @@ export default {
       title:{},
 
       huanbiV1Data:[],
+      huanbiV2Data:[],
+      huanbiV3Data:[],
+      huanbiV4Data:[],
 
 
 
@@ -431,12 +450,12 @@ export default {
         const resdata =  response.data.data.mini;
 
         this.v1data = resdata.v1;
+        console.log( this.v1data)
         this.v2data = resdata.v2;
         this.v3data = resdata.v3;
         this.v4data = resdata.v4;
 
         const temp = resdata.otherDate
-        console.log(temp.v5_3)
         this.otherDate={
           v1_1: temp.v1_1 ? temp.v1_1 : 0,
           v1_2:temp.v1_2 ? temp.v1_2.toFixed(0) : 0,
@@ -463,7 +482,8 @@ export default {
 
     typeChange(res){
       this.typeValue = res.target.value
-      if(this.typeValue == "b"){
+      if((this.typeValue == "b") && (this.huanbiV1Data.length == 0)){
+        this.loadBig02 = false;
         var formdata = {};
         formdata["pname"] = this.paramPname;
         formdata["limit"] = 12;
@@ -471,7 +491,10 @@ export default {
         getDayCompare(formdataSt).then( (response)=> {
           const resdata = response.data.data;
           this.huanbiV1Data = resdata.huanbiV1Data
-          console.log(this.huanbiV1Data)
+          this.huanbiV2Data = resdata.huanbiV2Data
+          this.huanbiV3Data = resdata.huanbiV3Data
+          this.huanbiV4Data = resdata.huanbiV4Data
+          this.loadBig02 = true;
         })
 
       }
@@ -479,7 +502,6 @@ export default {
 
     //内比日详情日期
     dateChange01(date, dateString) {
-      console.log(date, dateString);
       this.bigDate = date;
       this.bigviewDate = dateString;
     },
@@ -489,6 +511,15 @@ export default {
       const valueList = value.toString().split(",");
       this.paramPname = valueList[0];
       this.paramPid = valueList[1];
+
+
+    },
+
+    //内比日详情部门
+    departChange02(value) {
+      const valueList = value.toString().split(",");
+      this.paramPname02 = valueList[0];
+      this.paramPid02 = valueList[1];
 
 
     },
@@ -505,33 +536,50 @@ export default {
 
     //实时地区选择器
     changeBig() {
-      this.loadBig = false
-
       var formdata = {};
-      formdata["pname"] = this.paramPname;
-      formdata["pid"] = this.paramPid;
-      formdata["viewDate"] = this.bigviewDate;
-      var h ;
-      if(this.viewDate == this.bigviewDate){
-          h = this.bigDate.getHours()
-      }else{
-        h = 24
-      }
-      formdata["h"] = h;
-      var formdataSt = JSON.stringify(formdata)
-      console.log(formdata)
-      getBig(formdataSt).then( (response)=> {
-        const resBigdata = response.data.data.big;
-        console.log(resBigdata)
-        this.v1Bigdata = resBigdata.leftData
-        this.v2Bigdata = resBigdata.rightData
-        this.v3Bigdata = resBigdata.leftdwData
-        this.v4Bigdata = resBigdata.timeViewData
-        this.v5Bigdata = resBigdata.moneyViewData
-        this.title = resBigdata.titleData
-        this.loadBig = true
+      var formdataSt = ""
+      if(this.typeValue == "a"){
+        this.loadBig = false
 
-      })
+        formdata = {};
+        formdata["pname"] = this.paramPname;
+        formdata["pid"] = this.paramPid;
+        formdata["viewDate"] = this.bigviewDate;
+
+        var h ;
+        if(this.viewDate == this.bigviewDate){
+          h = new Date().getHours()
+        }else{
+          h = 24
+        }
+        formdata["h"] = h;
+        formdataSt = JSON.stringify(formdata)
+        getBig(formdataSt).then( (response)=> {
+          const resBigdata = response.data.data.big;
+          this.v1Bigdata = resBigdata.leftData
+          this.v2Bigdata = resBigdata.rightData
+          this.v3Bigdata = resBigdata.leftdwData
+          this.v4Bigdata = resBigdata.timeViewData
+          this.v5Bigdata = resBigdata.moneyViewData
+          this.title = resBigdata.titleData
+          this.loadBig = true
+
+        })
+      }else if(this.typeValue == "b"){
+        this.loadBig02 = false;
+        formdata = {};
+        formdata["pname"] = this.paramPname02;
+        formdata["limit"] = 12;
+        formdataSt = JSON.stringify(formdata)
+        getDayCompare(formdataSt).then( (response)=> {
+          const resdata = response.data.data;
+          this.huanbiV1Data = resdata.huanbiV1Data
+          this.huanbiV2Data = resdata.huanbiV2Data
+          this.huanbiV3Data = resdata.huanbiV3Data
+          this.huanbiV4Data = resdata.huanbiV4Data
+          this.loadBig02 = true;
+        })
+      }
 
     },
 
@@ -561,6 +609,11 @@ export default {
   created() {
     this.loadMini = false;
     this.loadBig = false
+    this.paramPid = this.user.pid;
+    this.paramPname = this.user.pname;
+    this.paramPid02 = this.user.pid;
+    this.paramPname02 = this.user.pname;
+
     var formdata = {};
     formdata["pid"] = this.user.pid;
     formdata["pname"] = this.user.pname;
@@ -581,7 +634,6 @@ export default {
       this.v2data = resdata.v2;
       this.v3data = resdata.v3;
       this.v4data = resdata.v4;
-
       // //第一个小图的峰值数据
       // if(response.data.data.jtldata){
       //   this.otherPeak = response.data.data.jtldata.otherData;

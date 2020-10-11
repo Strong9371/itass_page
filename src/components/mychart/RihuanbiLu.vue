@@ -1,51 +1,62 @@
+
+
+
 <template>
   <div class="bar">
     <h1 style="font-weight: bolder">{{ title }}</h1>
-
+    <a-empty v-if="huanbiV1Data.length < 1"></a-empty>
     <div class="chart">
-      <v-chart :force-fit="true" :height="height" :data="jtlv"  :scale = "scale">
-        <v-axis />
-        <v-legend />
-        <v-tooltip />
-        <v-smooth-area position="x*y" />
-      </v-chart>
-    </div>
+    <v-chart :force-fit="true" :height="height" :data="huanbiV1Data" :scale="scale">
+      <v-tooltip />
+      <v-axis />
+      <v-legend />
+      <v-line position="month*temperature" color="city" />
+      <v-point position="month*temperature" color="city" :size="4" :v-style="style" :shape="'circle'" />
+    </v-chart>
+  </div>
   </div>
 </template>
 
 <script>
-
-
-const tooltip = [
-  'x*y',
-  (x) => ({
-    name: x ,
-    value: "sad"
-  })
-]
-
+// const DataSet = require('@antv/data-set');
+//
+// const sourceData = [
+//   { month: 'Jan', Tokyo: 0.45, London: 0.6 },
+//   { month: 'Feb', Tokyo: 0.39, London: 0.42 },
+//
+// ];
+//
+// const dv = new DataSet.View().source(sourceData);
+// dv.transform({
+//   type: 'fold',
+//   fields: ['Tokyo', 'London'],
+//   key: 'city',
+//   value: 'temperature',
+// });
+// const data = dv.rows;
+// console.log(data)
 const scale = [{
-  dataKey: 'x',
-  min: 10
-}, {
-  dataKey: 'y',
-  title: '时间',
-  min: 1,
-  max: 1
-}]
+  dataKey: 'month',
+  min: 0,
+  max: 1,
+}];
 
 export default {
-  name: 'RiHuanbi',
-  props:['title','jtlv'],
-  data () {
+  name: 'LeftBar',
+  props:['title','huanbiV1Data'],
+  data() {
     return {
+      // data,
       scale,
-      tooltip,
-      height: 350
-    }
+      height: 350,
+      style: { stroke: '#fff', lineWidth: 1 },
+    };
+  },
+  created() {
   }
-}
+};
 </script>
+
 
 <style scoped lang="less">
 .bar{
