@@ -153,9 +153,7 @@
                     <a-select v-show="typeValue == 'a'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
                               @change="departChange01">
                       <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
-                        <a-tooltip :title="item.pname" slot="action">
                           {{ item.pname }}
-                        </a-tooltip>
                       </a-select-option>
                     </a-select>
 
@@ -163,9 +161,15 @@
                     <a-select v-show="typeValue == 'b'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
                               @change="departChange02">
                       <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
-                        <a-tooltip :title="item.pname" slot="action">
                           {{ item.pname }}
-                        </a-tooltip>
+                      </a-select-option>
+                    </a-select>
+
+
+                    <a-select v-show="typeValue == 'c'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
+                              @change="departChange03">
+                      <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
+                          {{ item.pname }}
                       </a-select-option>
                     </a-select>
 
@@ -235,22 +239,22 @@
             <a-row style="margin-top: 20px"   v-if="typeValue == 'c'">
               <a-col :span="12" >
 
-                <rihuanbi-lu   />
+                <ri-huanbi v-if="loadBig03"  title="接通率周环比" :huanbiV1Data="zhuanbiV1Data"/>
               </a-col>
 
               <a-col :span="12" >
 
-                <left-bar   />
+                <left-bar v-if="loadBig03" title="接通量部门环比"  :jtl="zhuanbiV2Data"  />
 
               </a-col>
 
               <a-col :span="12" >
-                <left-bar   />
+                <double-barld v-if="loadBig03"  title="接通量分类环比"  :samount="zhuanbiV3Data"/>
               </a-col>
 
               <a-col :span="12" >
 
-                <left-bar   />
+                <left-bar v-if="loadBig03"   title="电话时长环比"  :jtl="zhuanbiV4Data"/>
 
               </a-col>
 
@@ -325,7 +329,7 @@ import RiHuanbi from '../../../components/mychart/RihuanbiLu'
 import DoubleBarld from '../../../components/mychart/DoubleBarld.vue'
 
 
-import {getAll,getMini,getBig,getDayCompare} from "@/services/user";
+import {getAll,getMini,getBig,getDayCompare,getWeekCompare} from "@/services/user";
 
 
 //获取vuex数据
@@ -350,6 +354,7 @@ export default {
       loading: true,
       loadBig:true,
       loadBig02 : true,
+      loadBig03 : true,
       loadMini:true,
       viewDate:"",
       bigDate:new Date(),
@@ -359,6 +364,9 @@ export default {
 
       paramPid02:0,
       paramPname02:"",
+
+      paramPid03:0,
+      paramPname03:"",
       //一级部门数据
       firstDepart:[],
 
@@ -400,7 +408,10 @@ export default {
       huanbiV3Data:[],
       huanbiV4Data:[],
 
-
+      zhuanbiV1Data:[],
+      zhuanbiV2Data:[],
+      zhuanbiV3Data:[],
+      zhuanbiV4Data:[],
 
 
 
@@ -481,13 +492,15 @@ export default {
     },
 
     typeChange(res){
+      var formdata = {};
+      var formdataSt = ""
       this.typeValue = res.target.value
       if((this.typeValue == "b") && (this.huanbiV1Data.length == 0)){
         this.loadBig02 = false;
-        var formdata = {};
-        formdata["pname"] = this.paramPname;
+
+        formdata["pname"] = this.paramPname02;
         formdata["limit"] = 12;
-        var formdataSt = JSON.stringify(formdata)
+        formdataSt = JSON.stringify(formdata)
         getDayCompare(formdataSt).then( (response)=> {
           const resdata = response.data.data;
           this.huanbiV1Data = resdata.huanbiV1Data
@@ -497,6 +510,21 @@ export default {
           this.loadBig02 = true;
         })
 
+      }else if((this.typeValue == "c") && (this.zhuanbiV1Data.length == 0)){
+        this.loadBig03 = false;
+
+        formdata["pname"] = this.paramPname03;
+        formdata["limit"] = 12;
+        formdataSt = JSON.stringify(formdata)
+        getWeekCompare(formdataSt).then( (response)=> {
+          const resdata = response.data.data;
+          console.log(resdata)
+          this.zhuanbiV1Data = resdata.zhuanbiV1Data
+          this.zhuanbiV2Data = resdata.zhuanbiV2Data
+          this.zhuanbiV3Data = resdata.zhuanbiV3Data
+          this.zhuanbiV4Data = resdata.zhuanbiV4Data
+          this.loadBig03 = true;
+        })
       }
     },
 
@@ -520,13 +548,18 @@ export default {
       const valueList = value.toString().split(",");
       this.paramPname02 = valueList[0];
       this.paramPid02 = valueList[1];
+    },
 
-
+    //内比日详情部门
+    departChange03(value) {
+      const valueList = value.toString().split(",");
+      this.paramPname03 = valueList[0];
+      this.paramPid03 = valueList[1];
     },
 
     //设置时间选择器的上限（今天）
     disableDate(end){
-      if(new Date() <= new Date(end)){
+      if(new Date() < new Date(end)){
         return true
 
       }else{
@@ -579,6 +612,20 @@ export default {
           this.huanbiV4Data = resdata.huanbiV4Data
           this.loadBig02 = true;
         })
+      }else if(this.typeValue == "c"){
+        this.loadBig03 = false;
+        formdata = {};
+        formdata["pname"] = this.paramPname03;
+        formdata["limit"] = 12;
+        formdataSt = JSON.stringify(formdata)
+        getWeekCompare(formdataSt).then( (response)=> {
+          const resdata = response.data.data;
+          this.zhuanbiV1Data = resdata.zhuanbiV1Data
+          this.zhuanbiV2Data = resdata.zhuanbiV2Data
+          this.zhuanbiV3Data = resdata.zhuanbiV3Data
+          this.zhuanbiV4Data = resdata.zhuanbiV4Data
+          this.loadBig03 = true;
+        })
       }
 
     },
@@ -613,7 +660,8 @@ export default {
     this.paramPname = this.user.pname;
     this.paramPid02 = this.user.pid;
     this.paramPname02 = this.user.pname;
-
+    this.paramPid03 = this.user.pid;
+    this.paramPname03 = this.user.pname;
     var formdata = {};
     formdata["pid"] = this.user.pid;
     formdata["pname"] = this.user.pname;

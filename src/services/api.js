@@ -10,6 +10,7 @@ module.exports = {
   GETMINI: `${BASE_URL}/dgg/getMini`,
   GETBIG: `${BASE_URL}/dgg/getBig`,
   GETDC: `${BASE_URL}/dgg/getDayCompare`,
+  GETWC: `${BASE_URL}/dgg/getWeekCompare`,
 
 
 }
