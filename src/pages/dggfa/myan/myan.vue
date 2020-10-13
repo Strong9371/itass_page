@@ -278,7 +278,7 @@
 
 <!--                    </a-radio-group>-->
 
-                    <a-date-picker :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="onChange" style="margin-left: 5px"/>
+                    <a-date-picker :defaultValue="moment(viewDate02,'YYYY-MM-DD')" @change="onChange" style="margin-left: 5px"/>
 
                     <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
                       查询
@@ -288,9 +288,9 @@
               </a-row>
             </div>
 
-            <a-row>
+            <a-row style="margin-top: 20px">
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <ri-huanbi v-if="loadBig02"  title="接通率日环比" :huanbiV1Data="huanbiV1Data"/>
+                <ri-huanbi v-if="loadOut"  title="接通率外部环比" :huanbiV1Data="outV1Data"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList"/>
@@ -326,7 +326,7 @@ import RiHuanbi from '../../../components/mychart/RihuanbiLu'
 import DoubleBarld from '../../../components/mychart/DoubleBarld.vue'
 
 
-import {getAll,getMini,getBig,getDayCompare,getWeekCompare} from "@/services/user";
+import {test,getAll,getMini,getBig,getDayCompare,getWeekCompare,getOutCompare} from "@/services/user";
 
 
 //获取vuex数据
@@ -352,10 +352,18 @@ export default {
       loadBig:true,
       loadBig02 : true,
       loadBig03 : true,
+
+      loadOut : true,
+
       loadMini:true,
-      viewDate:"",
+
       bigDate:new Date(),
+      viewDate:"",
       bigviewDate:"",
+
+      viewDate02:"",
+      bigviewDate02:"",
+
       paramPid:0,
       paramPname:"",
 
@@ -410,15 +418,8 @@ export default {
       zhuanbiV3Data:[],
       zhuanbiV4Data:[],
 
-
-
-
-
-
-
-
-
-
+      //分公司外部比较数据
+      outV1Data:[],
 
 
 
@@ -570,8 +571,6 @@ export default {
       var formdataSt = ""
       if(this.typeValue == "a"){
         this.loadBig = false
-
-        formdata = {};
         formdata["pname"] = this.paramPname;
         formdata["pid"] = this.paramPid;
         formdata["viewDate"] = this.bigviewDate;
@@ -597,7 +596,6 @@ export default {
         })
       }else if(this.typeValue == "b"){
         this.loadBig02 = false;
-        formdata = {};
         formdata["pname"] = this.paramPname02;
         formdata["limit"] = 12;
         formdataSt = JSON.stringify(formdata)
@@ -627,22 +625,42 @@ export default {
 
     },
 
-
-
-
-
-
-
+    //外比日期选择
 
     onChange(date, dateString) {
       console.log(date, dateString);
+      this.bigDate = date;
+      this.bigviewDate02 = dateString;
     },
+
     changeTab(res){
-      console.log(res)
+      if(res == 2){
+        var formdata = {};
+        var formdataSt = ""
+          this.loadOut = false
+          formdata["limit"] = 12
+          formdata["viewDate"] = this.bigviewDate02;
+
+          formdataSt = JSON.stringify(formdata)
+          getOutCompare(formdataSt).then( (response)=> {
+            console.log(response)
+            const outData = response.data.data;
+            this.outV1Data = outData.outV1Data;
+            this.loadOut = true
+
+          })
+      }
     },
     showModal() {
       this.visible = true;
+      var formdata = {};
+      formdata["qid"] = "id";
+      var formdataSt = JSON.stringify(formdata)
+      test(formdataSt).then(function (response) {
+        console.log(response);
+      })
     },
+
     handleOk(e) {
       console.log(e);
       this.visible = false;
@@ -667,6 +685,10 @@ export default {
     var day = nowDate.getDate() < 10 ? ("0" + nowDate.getDate()) : nowDate.getDate()
     this.viewDate =  nowDate.getFullYear()+"-"+month+"-"+day
     this.bigviewDate =  nowDate.getFullYear()+"-"+month+"-"+day
+
+    //分公司外比的时间
+    this.viewDate02 = this.viewDate
+    this.bigviewDate02 =   this.bigviewDate
     // var h = nowDate.getHours();
     formdata["viewDate"] = this.viewDate;
     var formdataSt = JSON.stringify(formdata)
