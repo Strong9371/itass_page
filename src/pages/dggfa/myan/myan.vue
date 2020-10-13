@@ -278,7 +278,7 @@
 
                     </a-radio-group>
 
-                    <a-date-picker @change="onChange" style="margin-left: 5px"/>
+                    <a-date-picker  :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="dateChange02" style="margin-left: 5px" :disabled-date="disableDate"/>
 
                     <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
                       查询
@@ -414,14 +414,8 @@ export default {
       zhuanbiV4Data:[],
 
 
-
-
-
-
-
-
-
-
+      bigDate02:new Date(),
+      bigviewDate02:"",
 
 
 
@@ -631,7 +625,11 @@ export default {
     },
 
 
-
+    //外比日详情日期
+    dateChange02(date, dateString) {
+      this.bigDate02 = date;
+      this.bigviewDate02 = dateString;
+    },
 
 
 
