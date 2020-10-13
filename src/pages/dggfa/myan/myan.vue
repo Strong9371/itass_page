@@ -267,18 +267,18 @@
               <a-row >
                 <a-col :span="20">
                   <div>
-                    <a-radio-group default-value="a" button-style="solid">
+<!--                    <a-radio-group default-value="a" button-style="solid">-->
 
-                      <a-radio-button value="b">
-                        日环比
-                      </a-radio-button>
-                      <a-radio-button value="c">
-                        周环比
-                      </a-radio-button>
+<!--                      <a-radio-button value="b">-->
+<!--                        日环比-->
+<!--                      </a-radio-button>-->
+<!--                      <a-radio-button value="c">-->
+<!--                        周环比-->
+<!--                      </a-radio-button>-->
 
-                    </a-radio-group>
+<!--                    </a-radio-group>-->
 
-                    <a-date-picker  :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="dateChange02" style="margin-left: 5px" :disabled-date="disableDate"/>
+                    <a-date-picker :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="onChange" style="margin-left: 5px"/>
 
                     <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
                       查询
@@ -290,8 +290,7 @@
 
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <huanbi-bar/>
-                <bar :title="$ta('visits|trend', 'p')" v-if="false"/>
+                <ri-huanbi v-if="loadBig02"  title="接通率日环比" :huanbiV1Data="huanbiV1Data"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList"/>
@@ -307,7 +306,6 @@
 
 <script>
 import ChartCard from '../../../components/card/ChartCard'
-import Bar from '../../../components/chart/Bar'
 import RankingList from '../../../components/mychart/RankingList'
 import Trend from '../../../components/chart/Trend'
 
@@ -317,7 +315,6 @@ import DoubleBar from '../../../components/mychart/DoubleBar.vue'
 import MiniBar from '../../../components/mychart/MiniBar'
 import SecBar from '../../../components/mychart/SecBar'
 import MiniProgress from '../../../components/mychart/MiniProgress'
-import HuanbiBar from '../../../components/mychart/HuanbiBar'
 import RightJtl from '../../../components/mychart/RightJtl';
 import LeftBar from '../../../components/mychart/LeftBar';
 import LeftBardw from '../../../components/mychart/LeftBardw';
@@ -338,7 +335,7 @@ import moment from "moment"
 
 const rankList = []
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 18; i++) {
   rankList.push({
     name: '桃源村' + i + '号店',
     total: 1234.56 - i * 100
@@ -414,8 +411,14 @@ export default {
       zhuanbiV4Data:[],
 
 
-      bigDate02:new Date(),
-      bigviewDate02:"",
+
+
+
+
+
+
+
+
 
 
 
@@ -625,11 +628,7 @@ export default {
     },
 
 
-    //外比日详情日期
-    dateChange02(date, dateString) {
-      this.bigDate02 = date;
-      this.bigviewDate02 = dateString;
-    },
+
 
 
 
@@ -734,14 +733,12 @@ export default {
     RightJtl,
     Trend,
     RankingList,
-    Bar,
     MiniProgress,
     MiniArea,
     MiniBar,
     SecBar,
     DoubleBar,
     ChartCard,
-    HuanbiBar,
     LeftBar,
     LeftBardw,
     RightJtldw,
