@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       // data,
-      height: 400,
+      height: 350,
       label: label,
       adjust: adjust,
     };
