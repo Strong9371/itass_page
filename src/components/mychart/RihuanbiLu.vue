@@ -53,6 +53,7 @@ export default {
     };
   },
   created() {
+    console.log(this.huanbiV1Data)
   }
 };
 </script>

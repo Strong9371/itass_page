@@ -12,7 +12,7 @@ module.exports = {
   },
 
   systemName: 'DGG 网管助手',         //系统名称
-  copyright: '  武汉   胡杰',     //copyright
+  copyright: '2018 ICZER 工作室出品',     //copyright
   footerLinks: [                        //页面底部链接，{link: '链接地址', name: '名称/显示文字', icon: '图标，支持 ant design vue 图标库'}
     {link: 'http://map.dgg.net/', name: '网址导航'},
   ],
