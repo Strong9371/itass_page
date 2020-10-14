@@ -295,10 +295,16 @@
                 <ri-huanbi v-if="loadOut"  title="接通率外部环比" :huanbiV1Data="outV1Data"  height="400"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList"/>
+                <ranking-list v-if="loadOut" :title="'接通率top榜:' + viewDate02" :list="outV2Data"/>
+              </a-col>
+              <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                <out-comparev3 v-if="loadOut" title="接通量外部环比" :out-v3-data="outV3Data"></out-comparev3>
+              </a-col>
+              <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+                <out-comparev4 v-if="loadOut" title="接通量外部环比" :out-v4-data="outV4Data"></out-comparev4>
               </a-col>
             </a-row>
-          </a-tab-pane>
+          </a-tab-pane> 
         </a-tabs>
       </div>
     </a-card>
@@ -326,6 +332,10 @@ import Timedw from '../../../components/mychart/Timedw';
 //日环比
 import RiHuanbi from '../../../components/mychart/RihuanbiLu'
 import DoubleBarld from '../../../components/mychart/DoubleBarld.vue'
+
+//周环比
+import OutComparev3 from '../../../components/mychart/OutComparev3.vue'
+import OutComparev4 from '../../../components/mychart/OutComparev4.vue'
 
 
 import {test,getAll,getMini,getBig,getDayCompare,getWeekCompare,getOutCompare} from "@/services/user";
@@ -422,6 +432,9 @@ export default {
 
       //分公司外部比较数据
       outV1Data:[],
+      outV2Data:[],
+      outV3Data:[],
+      outV4Data:[],
 
 
 
@@ -635,8 +648,9 @@ export default {
       this.bigviewDate02 = dateString;
     },
 
+    //切换内比外比
     changeTab(res){
-      if(res == 2){
+      if((res == 2) && (this.outV1Data.length == 0)){
         var formdata = {};
         var formdataSt = ""
           this.loadOut = false
@@ -648,6 +662,9 @@ export default {
             console.log(response)
             const outData = response.data.data;
             this.outV1Data = outData.outV1Data;
+            this.outV2Data = outData.outV2Data;
+            this.outV3Data = outData.outV3Data;
+            this.outV4Data = outData.outV4Data;
             this.loadOut = true
 
           })
@@ -769,6 +786,8 @@ export default {
     DoubleBarld,
     Timedw,
     RiHuanbi,
+    OutComparev3,
+    OutComparev4
 
   }
 }

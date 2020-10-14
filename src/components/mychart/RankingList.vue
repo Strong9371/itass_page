@@ -3,9 +3,9 @@
     <h1 style="font-weight: bolder;">{{title}}</h1>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
-        <span :class="index < 3 ? 'active' : null">{{index + 1}}</span>
+        <span :class="index < 3 ? 'active' : (index > (list.length - 4) ? 'down' : null)">{{index + 1}}</span>
         <span >{{item.name}}</span>
-        <span >{{item.total}}</span>
+        <span >{{(item.total*100).toFixed(2)}}%</span>
       </li>
     </ul>
   </div>
@@ -51,7 +51,11 @@ export default {
           text-align: center;
         }
         span.active {
-          background-color: #314659 !important;
+          background-color: green !important;
+          color: @text-color-inverse !important;
+        }
+        span.down {
+          background-color: red !important;
           color: @text-color-inverse !important;
         }
         span:last-child {
