@@ -150,6 +150,8 @@
 
                     <a-date-picker v-if="typeValue == 'a'" :defaultValue="moment(viewDate,'YYYY-MM-DD')" @change="dateChange01" style="margin-left: 5px" :disabled-date="disableDate"/>
 
+                    <a-week-picker v-if="typeValue == 'c'" placeholder="查看周数据对应日期" style="margin-left: 5px" />
+
                     <a-select v-show="typeValue == 'a'" :default-value="user.pname" style="width: 220px;margin-left: 5px;z-index: 92"
                               @change="departChange01">
                       <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
@@ -214,7 +216,7 @@
             <a-row style="margin-top: 20px"   v-if="typeValue == 'b'">
               <a-col :span="12" >
 
-                <ri-huanbi v-if="loadBig02"  title="接通率日环比" :huanbiV1Data="huanbiV1Data"/>
+                <ri-huanbi v-if="loadBig02"  title="接通率日环比" :huanbiV1Data="huanbiV1Data" height="350"/>
               </a-col>
 
               <a-col :span="12" >
@@ -239,7 +241,7 @@
             <a-row style="margin-top: 20px"   v-if="typeValue == 'c'">
               <a-col :span="12" >
 
-                <ri-huanbi v-if="loadBig03"  title="接通率周环比" :huanbiV1Data="zhuanbiV1Data"/>
+                <ri-huanbi v-if="loadBig03"  title="接通率周环比" :huanbiV1Data="zhuanbiV1Data" height="350"/>
               </a-col>
 
               <a-col :span="12" >
@@ -290,7 +292,7 @@
 
             <a-row style="margin-top: 20px">
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <ri-huanbi v-if="loadOut"  title="接通率外部环比" :huanbiV1Data="outV1Data"/>
+                <ri-huanbi v-if="loadOut"  title="接通率外部环比" :huanbiV1Data="outV1Data"  height="400"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList"/>

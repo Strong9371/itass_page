@@ -43,12 +43,12 @@ const scale = [{
 
 export default {
   name: 'LeftBar',
-  props:['title','huanbiV1Data'],
+  props:['title','huanbiV1Data','height'],
   data() {
     return {
       // data,
       scale,
-      height: 350,
+      // height: 350,
       style: { stroke: '#fff', lineWidth: 1 },
     };
   },

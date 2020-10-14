@@ -1,6 +1,6 @@
 <template>
   <div class="rank">
-    <h4 class="title">{{title}}</h4>
+    <h1 style="font-weight: bolder;">{{title}}</h1>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
         <span :class="index < 3 ? 'active' : null">{{index + 1}}</span>
@@ -24,9 +24,13 @@ export default {
     .title{
     }
     .list{
-      margin: 25px 0 0;
+      height: 350px;
+      margin: 25px 20px 0;
       padding: 0;
       list-style: none;
+      display: block;padding: 0;
+      white-space: nowrap;
+      overflow-y: scroll;
       li {
         margin-top: 16px;
         span {
