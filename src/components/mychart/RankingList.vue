@@ -1,6 +1,7 @@
 <template>
   <div class="rank">
     <h1 style="font-weight: bolder;">{{title}}</h1>
+    <a-empty v-if="list.length < 1"></a-empty>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
         <span :class="index < 3 ? 'active' : (index > (list.length - 4) ? 'down' : null)">{{index + 1}}</span>

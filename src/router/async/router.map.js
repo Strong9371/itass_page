@@ -30,9 +30,17 @@ const routerMap = {
     name: '报销',
     component: view.blank
   },
-  bill: {
+  StepForm: {
     name: '发票助手',
     component: () => import('@/pages/moneys/bill')
+  },
+  setting:{
+    name: '设置',
+    component: view.blank
+  },
+  SetPage: {
+    name: '设置中心',
+    component: () => import('@/pages/setting/setpage')
   },
   dashboard: {
     name: 'Dashboard',

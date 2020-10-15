@@ -117,16 +117,16 @@
       <div class="salesCard">
         <a-tabs default-active-key="1"  size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab" style="height: 1100px">
 
-          <div class="extra-wrap" slot="tabBarExtraContent">
-            <a-button  type="primary" @click="showModal" style="width: 180px;margin-right: 100px">
-              生成日报
-            </a-button>
-            <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </a-modal>
-          </div>
+<!--          <div class="extra-wrap" slot="tabBarExtraContent">-->
+<!--            <a-button  type="primary" @click="showModal" style="width: 180px;margin-right: 100px">-->
+<!--              生成日报-->
+<!--            </a-button>-->
+<!--            <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">-->
+<!--              <p>Some contents...</p>-->
+<!--              <p>Some contents...</p>-->
+<!--              <p>Some contents...</p>-->
+<!--            </a-modal>-->
+<!--          </div>-->
 
 
           <a-tab-pane :loading="loading" tab="分公司内比" key="1" >
@@ -269,20 +269,10 @@
               <a-row >
                 <a-col :span="20">
                   <div>
-<!--                    <a-radio-group default-value="a" button-style="solid">-->
 
-<!--                      <a-radio-button value="b">-->
-<!--                        日环比-->
-<!--                      </a-radio-button>-->
-<!--                      <a-radio-button value="c">-->
-<!--                        周环比-->
-<!--                      </a-radio-button>-->
+                    <a-date-picker :defaultValue="moment(viewDate02,'YYYY-MM-DD')" :disabled-date="disableDate" @change="onChange" style="margin-left: 5px"/>
 
-<!--                    </a-radio-group>-->
-
-                    <a-date-picker :defaultValue="moment(viewDate02,'YYYY-MM-DD')" @change="onChange" style="margin-left: 5px"/>
-
-                    <a-button  type="primary" @click="showModal" style="width: 180px;;margin-left: 5px">
+                    <a-button  type="primary" @click="changeOutDate" style="width: 180px;;margin-left: 5px">
                       查询
                     </a-button>
                   </div>
@@ -295,13 +285,13 @@
                 <ri-huanbi v-if="loadOut"  title="接通率外部环比" :huanbiV1Data="outV1Data"  height="400"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <ranking-list v-if="loadOut" :title="'接通率top榜:' + viewDate02" :list="outV2Data"/>
+                <ranking-list v-if="loadOut" :title="'接通率top榜:' + bigviewDate02" :list="outV2Data"/>
               </a-col>
               <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
-                <out-comparev3 v-if="loadOut" title="接通量外部环比" :out-v3-data="outV3Data"></out-comparev3>
+                <out-comparev3 v-if="loadOut" :title="'接通量外部环比:'+ bigviewDate02" :out-v3-data="outV3Data"></out-comparev3>
               </a-col>
               <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
-                <out-comparev4 v-if="loadOut" title="接通量外部环比" :out-v4-data="outV4Data"></out-comparev4>
+                <out-comparev4 v-if="loadOut" :title="'接通量外部环比:'+ bigviewDate02" :out-v4-data="outV4Data"></out-comparev4>
               </a-col>
             </a-row>
           </a-tab-pane> 
@@ -345,21 +335,13 @@ import {test,getAll,getMini,getBig,getDayCompare,getWeekCompare,getOutCompare} f
 import {mapGetters} from 'vuex'
 import moment from "moment"
 
-const rankList = []
 
-for (let i = 0; i < 18; i++) {
-  rankList.push({
-    name: '桃源村' + i + '号店',
-    total: 1234.56 - i * 100
-  })
-}
 
 export default {
   name: 'Analysis',
   i18n: require('./i18n'),
   data() {
     return {
-      rankList,
       loading: true,
       loadBig:true,
       loadBig02 : true,
@@ -669,6 +651,26 @@ export default {
 
           })
       }
+    },
+
+    changeOutDate(){
+        var formdata = {};
+        var formdataSt = ""
+        this.loadOut = false
+        formdata["limit"] = 12
+        formdata["viewDate"] = this.bigviewDate02;
+
+        formdataSt = JSON.stringify(formdata)
+        getOutCompare(formdataSt).then( (response)=> {
+          console.log(response)
+          const outData = response.data.data;
+          this.outV1Data = outData.outV1Data;
+          this.outV2Data = outData.outV2Data;
+          this.outV3Data = outData.outV3Data;
+          this.outV4Data = outData.outV4Data;
+          this.loadOut = true
+
+        })
     },
     showModal() {
       this.visible = true;

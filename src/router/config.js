@@ -48,12 +48,28 @@ const options = {
 					},
 					component: PageView,
 					children: [{
-						path: 'bills',
+						path: 'StepForm',
 						name: '发票助手',
 						meta: {
 							icon: 'red-envelope'
 						},
 						component: () => import('@/pages/moneys/bill'),
+					}]
+				},
+				{
+					path: 'setting',
+					name: '设置',
+					meta: {
+						icon: 'setting'
+					},
+					component: PageView,
+					children: [{
+						path: 'SetPage',
+						name: '设置中心',
+						meta: {
+							icon: 'edit'
+						},
+						component: () => import('@/pages/setting/setpage'),
 					}]
 				},
 

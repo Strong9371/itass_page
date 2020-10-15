@@ -1,7 +1,7 @@
 <template>
   <div class="bar">
     <h1 style="font-weight: bolder">{{title}}</h1>
-<!--    <a-empty v-if="samount.length < 1"></a-empty>-->
+    <a-empty v-if="outV4Data.length < 1"></a-empty>
     <div class="chart">
       <v-chart :forceFit="true" :height="height" :data="outV4Data">
         <v-tooltip />
