@@ -98,7 +98,7 @@
           </a-tooltip>
 
           <h1 style="font-weight: bolder" v-if="(otherDate.v5_5 == 0) && (user.isAd == 0)">未设置费用明细</h1>
-          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd == 1)">去设置费用明细 <a-icon type="tool" theme="twoTone"/></h1>
+          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd >= 1)">去设置费用明细 <a-icon type="tool" theme="twoTone"/></h1>
 
           <div  v-if="otherDate.v5_5 != 0">
             <mini-progress v-if="loadMini" :target="otherDate.v5_2" :residue="otherDate.v5_1" />
@@ -117,16 +117,26 @@
       <div class="salesCard">
         <a-tabs default-active-key="1"  size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeTab" style="height: 1100px">
 
-<!--          <div class="extra-wrap" slot="tabBarExtraContent">-->
-<!--            <a-button  type="primary" @click="showModal" style="width: 180px;margin-right: 100px">-->
-<!--              生成日报-->
-<!--            </a-button>-->
-<!--            <a-modal v-model="visible" title="Basic Modal" @ok="handleOk">-->
-<!--              <p>Some contents...</p>-->
-<!--              <p>Some contents...</p>-->
-<!--              <p>Some contents...</p>-->
-<!--            </a-modal>-->
-<!--          </div>-->
+          <div class="extra-wrap" slot="tabBarExtraContent" v-if="tabValue == 1">
+            <a-button  type="primary" @click="showModal" style="width: 180px;margin-right: 100px">
+              生成日报
+            </a-button>
+            <a-modal v-model="visible" title="外呼智能日报" @ok="onCopy" >
+              <template slot="footer">
+                <a-button key="back" @click="handleCancel">
+                  确定
+                </a-button>
+                <a-button key="submit" type="primary"
+                          v-clipboard:copy="'外呼智能日报:'+dayRepart"
+                          v-clipboard:success="onCopy"
+                          v-clipboard:error="onError">
+                  复制日报
+                </a-button>
+              </template>
+              <h3>{{dayRepart}}</h3>
+
+            </a-modal>
+          </div>
 
 
           <a-tab-pane :loading="loading" tab="分公司内比" key="1" >
@@ -328,12 +338,13 @@ import OutComparev3 from '../../../components/mychart/OutComparev3.vue'
 import OutComparev4 from '../../../components/mychart/OutComparev4.vue'
 
 
-import {test,getAll,getMini,getBig,getDayCompare,getWeekCompare,getOutCompare} from "@/services/user";
+import {getAll,getMini,getBig,getDayCompare,getWeekCompare,getOutCompare} from "@/services/user";
 
 
 //获取vuex数据
 import {mapGetters} from 'vuex'
 import moment from "moment"
+
 
 
 
@@ -428,6 +439,9 @@ export default {
 
     //  视图切换value
       typeValue:'a',
+      tabValue : 1,
+      //日报数据
+      dayRepart:'暂无数据'
 
     }
   },
@@ -456,7 +470,6 @@ export default {
         const resdata =  response.data.data.mini;
 
         this.v1data = resdata.v1;
-        console.log( this.v1data)
         this.v2data = resdata.v2;
         this.v3data = resdata.v3;
         this.v4data = resdata.v4;
@@ -632,6 +645,7 @@ export default {
 
     //切换内比外比
     changeTab(res){
+      this.tabValue = res;
       if((res == 2) && (this.outV1Data.length == 0)){
         var formdata = {};
         var formdataSt = ""
@@ -674,14 +688,21 @@ export default {
     },
     showModal() {
       this.visible = true;
-      var formdata = {};
-      formdata["qid"] = "id";
-      var formdataSt = JSON.stringify(formdata)
-      test(formdataSt).then(function (response) {
-        console.log(response);
-      })
+      this.dayRepart = "截止"+this.viewDate + "日" + new Date().getHours() +"点：  合计接通量/拨打量："+ this.otherDate.v1_1 + "，接通率：" +
+                        this.otherDate.v2_1 + "%，预计话费：" + this.otherDate.v5_1.toFixed(2) + "元"
     },
 
+    handleCancel(){
+      this.visible = false;
+    },
+
+    onCopy(){
+      this.visible = false;
+      this.$message.success('日报复制成功！');
+    },
+    onError(){
+
+    },
     handleOk(e) {
       console.log(e);
       this.visible = false;
@@ -690,6 +711,7 @@ export default {
 
   },
   created() {
+    console.log(this.user)
     this.loadMini = false;
     this.loadBig = false
     this.paramPid = this.user.pid;

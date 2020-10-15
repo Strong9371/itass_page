@@ -1,6 +1,6 @@
 <template>
   <form :autoFormCreate="(form) => this.form = form">
-    <a-table style="overflow-y: scroll;height: 400px"
+    <a-table style="overflow-y: scroll;height: 300px"
       :columns="dataColumns"
       :dataSource="dataSource"
       :pagination="false"
@@ -8,12 +8,25 @@
       <template  v-for="(col, i) in ['name', 'password','isadmin', 'department']" :slot="col" slot-scope="text, record">
           <a-input
             :key="col"
-            v-if="record.editable && (i != 3)"
+            v-if="record.editable && (i != 3)  && (i!= 2)"
             style="margin: -5px 0"
             :value="text"
             :placeholder="columns[i].title"
             @change="e => handleChange(e.target.value, record.key, col)"
           />
+
+        <a-select default-value="0" style="width: 340px;margin-top: -10px;margin-bottom: -10px" v-if="record.editable && (i == 2)" :key="col">
+          <a-select-option value="0">
+            普通成员
+          </a-select-option>
+          <a-select-option value="1">
+            分公司管理员
+          </a-select-option>
+          <a-select-option value="2" >
+            系统管理员
+          </a-select-option>
+
+        </a-select>
 
         <a-select default-value="lucy" style="width: 340px;margin-top: -10px;margin-bottom: -10px" v-if="record.editable && (i == 3)" :key="col">
           <a-select-option value="jack">

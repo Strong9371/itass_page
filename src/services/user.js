@@ -1,4 +1,4 @@
-import {LOGIN, ROUTES,TEST,GETALL,GETMINI,GETBIG,GETDC ,GETWC,GETOC} from '@/services/api'
+import {LOGIN, ROUTES,TEST,GETALL,GETMINI,GETBIG,GETDC ,GETWC,GETOC,GETST} from '@/services/api'
 import {request, METHOD, removeAuthorization} from '@/utils/request'
 
 /**
@@ -66,6 +66,12 @@ export async function getWeekCompare(formdataSt) {
 
 export async function getOutCompare(formdataSt) {
   return request(GETOC, METHOD.GET,{
+    formdata:formdataSt
+  })
+}
+
+export async function getSet(formdataSt) {
+  return request(GETST, METHOD.GET,{
     formdata:formdataSt
   })
 }

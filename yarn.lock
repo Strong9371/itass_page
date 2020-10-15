@@ -8481,6 +8481,11 @@ requires-port@^1.0.0:
   resolved "https://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
+reqwest@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.npm.taobao.org/reqwest/download/reqwest-2.0.5.tgz#00fb15ac4918c419ca82b43f24c78882e66039a1"
+  integrity sha1-APsVrEkYxBnKgrQ/JMeIguZgOaE=
+
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
@@ -10070,6 +10075,13 @@ vue-cli-plugin-style-resources-loader@^0.1.4:
   resolved "https://registry.npm.taobao.org/vue-cli-plugin-style-resources-loader/download/vue-cli-plugin-style-resources-loader-0.1.4.tgz#6087a86132ea8125aa89e5f8e0a978fbc8cf6f59"
   integrity sha1-YIeoYTLqgSWqieX44Kl4+8jPb1k=
 
+vue-clipboard2@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npm.taobao.org/vue-clipboard2/download/vue-clipboard2-0.3.1.tgz#6e551fb7bd384889b28b0da3b12289ed6bca4894"
+  integrity sha1-blUft704SImyiw2jsSKJ7WvKSJQ=
+  dependencies:
+    clipboard "^2.0.0"
+
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.1.0.tgz?cache=0&sync_timestamp=1589566521118&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.1.0.tgz#9cdbcc823e656b087507a1911732b867ac101e83"
@@ -10091,6 +10103,11 @@ vue-i18n@^8.18.2:
   version "8.18.2"
   resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.18.2.tgz#cd7c12f2e178e6faa23b0e3cfd2f7bac9305f8fc"
   integrity sha1-zXwS8uF45vqiOw48/S97rJMF+Pw=
+
+vue-infinite-scroll@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/vue-infinite-scroll/download/vue-infinite-scroll-2.0.2.tgz#ca37a91fe92ee0ad3b74acf8682c00917144b711"
+  integrity sha1-yjepH+ku4K07dKz4aCwAkXFEtxE=
 
 vue-loader@^15.7.1:
   version "15.9.3"

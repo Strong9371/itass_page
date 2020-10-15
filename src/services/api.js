@@ -12,5 +12,6 @@ module.exports = {
   GETDC: `${BASE_URL}/dgg/getDayCompare`,
   GETWC: `${BASE_URL}/dgg/getWeekCompare`,
   GETOC: `${BASE_URL}/dgg/getPartCompareInfo`,
+  GETST: `${BASE_URL}/dgg/getSet`,
 
 }

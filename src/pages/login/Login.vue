@@ -20,7 +20,7 @@
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-input size="large" placeholder="888888" autocomplete="autocomplete" type="password"
+              <a-input size="large" placeholder="123" autocomplete="autocomplete" type="password"
                        v-decorator="['password', {rules: [{ required: true, message: '请输入密码', whitespace: true}]}]">
                 <a-icon slot="prefix" type="lock"/>
               </a-input>
@@ -71,7 +71,7 @@
 import CommonLayout from '@/layouts/CommonLayout'
 import {
   login,
-  getRoutesConfig
+  // getRoutesConfig
 } from '@/services/user'
 import {
   setAuthorization
@@ -123,10 +123,12 @@ export default {
       if (loginRes.state >= 0) {
         const {
           user,
+          router
           // permissions,
           // roles
         } = loginRes.data
         this.setUser(user)
+
         // this.setPermissions(permissions)
         // this.setRoles(roles)
         setAuthorization({
@@ -134,16 +136,26 @@ export default {
           expireAt: new Date(new Date().getTime() + 240 * 60 * 1000)
         })
         // 获取路由配置
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          loadRoutes({
-            router: this.$router,
-            store: this.$store,
-            i18n: this.$i18n
-          }, routesConfig)
-          this.$router.push('/dggfa/myan')
-          this.$message.success(loginRes.message, 3)
-        })
+        console.log(router)
+
+        loadRoutes({
+          router: this.$router,
+          store: this.$store,
+          i18n: this.$i18n
+        }, router)
+        this.$router.push('/dggfa/myan')
+        this.$message.success(loginRes.message, 3)
+        // getRoutesConfig().then(result => {
+        //   const routesConfig = result.data.data
+        //   console.log(routesConfig)
+        //   loadRoutes({
+        //     router: this.$router,
+        //     store: this.$store,
+        //     i18n: this.$i18n
+        //   }, routesConfig)
+        //   this.$router.push('/dggfa/myan')
+        //   this.$message.success(loginRes.message, 3)
+        // })
       } else {
         this.error = loginRes.message
       }

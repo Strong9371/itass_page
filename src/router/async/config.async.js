@@ -5,6 +5,11 @@ import {parseRoutes} from '@/utils/routerUtil'
 const routesConfig = [
   'login',
   'root',
+  // {
+  //   router: 'myan',
+  //   path: '@/pages/dggfa/myan',
+  //   name: '全局分析'
+  // },
   {
     router: 'exp404',
     path: '*',

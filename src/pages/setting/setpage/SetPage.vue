@@ -18,6 +18,10 @@ import RepositoryForm from './RepositoryForm'
 import TaskForm from './TaskForm'
 import UserForm from './UserForm'
 
+//获取vuex数据
+import {mapGetters} from 'vuex'
+import {getSet} from "@/services/user";
+
 
 export default {
   name: 'AdvancedForm',
@@ -31,21 +35,27 @@ export default {
   computed: {
     desc() {
       return this.$t('desc')
-    }
+    },
+    ...mapGetters('account', ['user']),
+
   },
+
   methods: {
-    validate () {
-      this.$refs.repository.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
-        }
-      })
-      this.$refs.task.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
-        }
-      })
-    }
+
+
+  },
+  created() {
+    console.log(this.user)
+    var formdata = {};
+    formdata["id"] = this.user.id;
+    formdata["pid"] = this.user.pid;
+    formdata["pname"] = this.user.pname;
+    formdata["isAd"] = this.user.isAd;
+
+    var formdataSt = JSON.stringify(formdata)
+    getSet(formdataSt).then( (response) => {
+      console.log(response)
+    })
   }
 }
 </script>
