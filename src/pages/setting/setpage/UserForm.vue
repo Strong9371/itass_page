@@ -12,10 +12,9 @@
             style="margin: -5px 0"
             :value="text"
             :placeholder="columns[i].title"
-            @change="e => handleChange(e.target.value, record.key, col)"
           />
 
-        <a-select default-value="0" style="width: 340px;margin-top: -10px;margin-bottom: -10px" v-if="record.editable && (i == 2)" :key="col">
+        <a-select :default-value="defaultAd" style="width: 340px;margin-top: -10px;margin-bottom: -10px" v-if="record.editable && (i == 2)" :key="col">
           <a-select-option value="0">
             普通成员
           </a-select-option>
@@ -110,39 +109,44 @@ const columns = [
   }
 ]
 
-const dataSource = [
-  {
-    key: 1,
-    name: '小明',
-    number: '001',
-    editable: false,
-    department: '行政部'
-  },
-  {
-    key: 2,
-    name: '李莉',
-    number: '002',
-    editable: false,
-    department: 'IT部'
-  },
-  {
-    key: 3,
-    name: '王小帅',
-    number: '003',
-    editable: false,
-    department: '财务部'
-  }
-]
+// const dataSource = [
+//   {
+//     key: 1,
+//     name: '小明',
+//     number: '001',
+//     editable: false,
+//     department: '行政部'
+//   },
+//   {
+//     key: 2,
+//     name: '李莉',
+//     number: '002',
+//     editable: false,
+//     department: 'IT部'
+//   },
+//   {
+//     key: 3,
+//     name: '王小帅',
+//     number: '003',
+//     editable: false,
+//     department: '财务部'
+//   }
+// ]
 
 export default {
   name: 'UserForm',
+  props: ['dataSource'],
   i18n: require('./i18n-user'),
   data () {
     return {
       columns,
-      dataSource
+      isadmin:['普通成员','分公司管理员','系统管理员'],
+      defaultAd:'0',
     }
   },
+  created() {
+  },
+
   computed: {
     dataColumns() {
       return this.columns.map(column => {
@@ -156,6 +160,10 @@ export default {
       e.preventDefault()
     },
     newMember () {
+      console.log("this.dataSource")
+
+      console.log(this.dataSource.length)
+
       this.dataSource.push({
         key: this.dataSource.length + 1,
         name: '',
@@ -177,6 +185,7 @@ export default {
     toggle (key) {
       let target = this.dataSource.filter(item => item.key === key)[0]
       target.editable = !target.editable
+      this.defaultAd = target.isadmin
     },
     getRowByKey (key, newData) {
       const data = this.dataSource
@@ -186,14 +195,14 @@ export default {
       let target = this.dataSource.filter(item => item.key === key)[0]
       target.editable = false
     },
-    handleChange (value, key, column) {
-      const newData = [...this.dataSource]
-      const target = newData.filter(item => key === item.key)[0]
-      if (target) {
-        target[column] = value
-        this.dataSource = newData
-      }
-    }
+    // handleChange (value, key, column) {
+    //   const newData = [...this.dataSource]
+    //   const target = newData.filter(item => key === item.key)[0]
+    //   if (target) {
+    //     target[column] = value
+    //     this.dataSource = newData
+    //   }
+    // }
   }
 }
 </script>

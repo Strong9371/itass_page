@@ -1,10 +1,14 @@
 <template>
   <a-card :bordered="false">
-    <a-steps class="steps" :current="current">
+    <a-empty style="margin-top: 200px;margin-bottom: 200px">
+      <span slot="description">正在开发中 </span>
+
+    </a-empty>
+    <a-steps class="steps" :current="current" v-if="false">
       <a-step title="请选择票据类型" />
       <a-step title="请填写票据信息" />
     </a-steps>
-    <div class="content">
+    <div class="content" v-if="false">
       <step1 v-if="current === 0" @nextStep="nextStep"></step1>
       <step2 v-if="current === 1" @nextStep="nextStep" @prevStep="prevStep"></step2>
     </div>

@@ -71,7 +71,7 @@
 import CommonLayout from '@/layouts/CommonLayout'
 import {
   login,
-  // getRoutesConfig
+  getRoutesConfig
 } from '@/services/user'
 import {
   setAuthorization
@@ -128,7 +128,7 @@ export default {
           // roles
         } = loginRes.data
         this.setUser(user)
-
+        console.log(router)
         // this.setPermissions(permissions)
         // this.setRoles(roles)
         setAuthorization({
@@ -136,7 +136,6 @@ export default {
           expireAt: new Date(new Date().getTime() + 240 * 60 * 1000)
         })
         // 获取路由配置
-        console.log(router)
 
         loadRoutes({
           router: this.$router,
@@ -145,17 +144,18 @@ export default {
         }, router)
         this.$router.push('/dggfa/myan')
         this.$message.success(loginRes.message, 3)
-        // getRoutesConfig().then(result => {
-        //   const routesConfig = result.data.data
-        //   console.log(routesConfig)
-        //   loadRoutes({
-        //     router: this.$router,
-        //     store: this.$store,
-        //     i18n: this.$i18n
-        //   }, routesConfig)
-        //   this.$router.push('/dggfa/myan')
-        //   this.$message.success(loginRes.message, 3)
-        // })
+
+        getRoutesConfig().then(result => {
+          const routesConfig = result.data.data
+          console.log(routesConfig)
+          // loadRoutes({
+          //   router: this.$router,
+          //   store: this.$store,
+          //   i18n: this.$i18n
+          // }, routesConfig)
+          // this.$router.push('/dggfa/myan')
+          // this.$message.success(loginRes.message, 3)
+        })
       } else {
         this.error = loginRes.message
       }

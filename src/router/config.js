@@ -26,7 +26,7 @@ const options = {
 			redirect: '/login',
 			children: [{
 				path: 'dggfa',
-				name: '首页',
+				name: '外呼首页',
 				meta: {
 					icon: 'line-chart'
 				},

@@ -1,10 +1,10 @@
 <template>
   <div>
     <a-card  class="card" :title="$t('user')" :bordered="false">
-      <user-form />
+      <user-form :dataSource="userData"/>
     </a-card>
     <a-card class="card" :title="$t('repository')" :bordered="false">
-      <repository-form ref="repository" :showSubmit="true" />
+      <repository-form ref="repository" :showSubmit="true" :depart-data="departData" :children-dpart="childrenDpart"/>
     </a-card>
     <a-card class="card" :title="$t('task')" :bordered="false">
       <task-form ref="task" :showSubmit="false" />
@@ -29,7 +29,10 @@ export default {
   i18n: require('./i18n'),
   data () {
     return {
-      loading: false
+      loading: false,
+      userData : [],
+      departData:[],
+      childrenDpart:[]
     }
   },
   computed: {
@@ -45,7 +48,6 @@ export default {
 
   },
   created() {
-    console.log(this.user)
     var formdata = {};
     formdata["id"] = this.user.id;
     formdata["pid"] = this.user.pid;
@@ -54,7 +56,11 @@ export default {
 
     var formdataSt = JSON.stringify(formdata)
     getSet(formdataSt).then( (response) => {
-      console.log(response)
+      this.userData = response.data.data.userByPid
+      this.departData = response.data.data.departByPid
+      this.childrenDpart = this.departData.splice(1,this.departData.length-1)
+      console.log(this.departData)
+      console.log(this.childrenDpart)
     })
   }
 }

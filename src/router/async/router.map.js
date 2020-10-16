@@ -19,7 +19,7 @@ const routerMap = {
     component: view.tabs
   },
   dggfa:{
-    name: '首页',
+    name: '外呼首页',
     component: view.blank
   },
   myan: {
@@ -28,7 +28,7 @@ const routerMap = {
   },
   moneys:{
     name: '报销',
-    component: view.blank
+    component: view.page
   },
   StepForm: {
     name: '发票助手',
@@ -36,7 +36,7 @@ const routerMap = {
   },
   setting:{
     name: '设置',
-    component: view.blank
+    component: view.page
   },
   SetPage: {
     name: '设置中心',
