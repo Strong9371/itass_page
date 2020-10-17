@@ -67,7 +67,6 @@ export default {
 
   created() {
     setInterval(()=>{
-      // console.log(this.data)
 
       // this.data.sort(function(a, b) {
       //     return a.人口数量 -b.人口数量;

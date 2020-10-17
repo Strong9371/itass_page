@@ -1,13 +1,13 @@
 <template>
   <div>
-    <a-card  class="card" :title="$t('user')" :bordered="false">
-      <user-form :dataSource="userData"/>
+    <a-card :loading="loading" class="card" :title="$t('user')" :bordered="false">
+      <user-form :dataSourcef="userData" :first-departf="firstDepart"/>
     </a-card>
-    <a-card class="card" :title="$t('repository')" :bordered="false">
+    <a-card :loading="loading" class="card" :title="$t('repository')" :bordered="false">
       <repository-form ref="repository" :showSubmit="true" :depart-data="departData" :children-dpart="childrenDpart"/>
     </a-card>
-    <a-card class="card" :title="$t('task')" :bordered="false">
-      <task-form ref="task" :showSubmit="false" />
+    <a-card :loading="loading" class="card" :title="$t('task')" :bordered="false">
+      <task-form ref="task" :showSubmit="true" :task="task"/>
     </a-card>
 
   </div>
@@ -32,7 +32,9 @@ export default {
       loading: false,
       userData : [],
       departData:[],
-      childrenDpart:[]
+      childrenDpart:[],
+      firstDepart:[],
+      task:{}
     }
   },
   computed: {
@@ -48,6 +50,7 @@ export default {
 
   },
   created() {
+    this.loading = true
     var formdata = {};
     formdata["id"] = this.user.id;
     formdata["pid"] = this.user.pid;
@@ -59,8 +62,9 @@ export default {
       this.userData = response.data.data.userByPid
       this.departData = response.data.data.departByPid
       this.childrenDpart = this.departData.splice(1,this.departData.length-1)
-      console.log(this.departData)
-      console.log(this.childrenDpart)
+      this.firstDepart = response.data.data.firstDepart
+      this.task = response.data.data.task;
+      this.loading = false
     })
   }
 }

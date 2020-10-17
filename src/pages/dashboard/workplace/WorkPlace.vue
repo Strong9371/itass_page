@@ -134,7 +134,6 @@ export default {
       // };
       // axios(options);
       test(formdataSt).then(function (response) {
-        console.log(response);
       })
     }
   },
@@ -146,7 +145,6 @@ export default {
   },
   created() {
     request('/user/welcome', METHOD.GET).then(res => {
-      console.log(res)
       this.welcome = res.data
     })
     request('/work/activity', METHOD.GET).then(res => this.activities = res.data)

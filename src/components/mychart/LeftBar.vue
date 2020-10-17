@@ -36,7 +36,6 @@
 //   value: '接通量',
 // });
 // const data = dv.rows;
-// console.log(data)
 
 export default {
 

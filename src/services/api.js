@@ -13,5 +13,9 @@ module.exports = {
   GETWC: `${BASE_URL}/dgg/getWeekCompare`,
   GETOC: `${BASE_URL}/dgg/getPartCompareInfo`,
   GETST: `${BASE_URL}/dgg/getSet`,
+  SETUSER: `${BASE_URL}/dgg/setUser`,
+  DELUSER: `${BASE_URL}/dgg/delUser`,
+  SETMONEY: `${BASE_URL}/dgg/setMoney`,
+  SETSER: `${BASE_URL}/dgg/setTask`,
 
 }

@@ -162,7 +162,6 @@ export default {
         this.$message.success(`复制成功，覆盖文件 src/config/config.js 然后重启项目即可生效`).then(() => {
           const localConfig = localStorage.getItem(process.env.VUE_APP_SETTING_KEY)
           if (localConfig) {
-            console.warn('检测到本地有历史保存的主题配置，想要要拷贝的配置代码生效，您可能需要先重置配置')
             this.$message.warn('检测到本地有历史保存的主题配置，想要要拷贝的配置代码生效，您可能需要先重置配置', 5)
           }
         })

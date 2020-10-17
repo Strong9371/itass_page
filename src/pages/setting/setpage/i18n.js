@@ -2,7 +2,7 @@ module.exports = {
   messages: {
     CN: {
       desc: '用户管理及系统后台设置等。',
-      repository: '费用设置(包含预警阈值和各事业部每分钟费用)',
+      repository: '费用设置(包含分公司每日预警阈值和各事业部每分钟费用)',
       task: '任务管理',
       user: '用户管理',
       submit: '提交'

@@ -91,7 +91,6 @@ export default {
 <!--});-->
 <!--const data = dv.rows;-->
 
-<!--console.log(data)-->
 
 <!--export default {-->
 <!--  data() {-->

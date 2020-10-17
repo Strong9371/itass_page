@@ -34,7 +34,6 @@
 //   value: 'temperature',
 // });
 // const data = dv.rows;
-// console.log(data)
 const scale = [{
   dataKey: 'month',
   min: 0,
@@ -53,7 +52,6 @@ export default {
     };
   },
   created() {
-    console.log(this.huanbiV1Data)
   }
 };
 </script>

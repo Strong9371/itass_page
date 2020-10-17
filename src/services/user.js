@@ -1,4 +1,4 @@
-import {LOGIN, ROUTES,TEST,GETALL,GETMINI,GETBIG,GETDC ,GETWC,GETOC,GETST} from '@/services/api'
+import {LOGIN, ROUTES,TEST,GETALL,GETMINI,GETBIG,GETDC ,GETWC,GETOC,GETST,SETUSER,DELUSER,SETMONEY,SETSER} from '@/services/api'
 import {request, METHOD, removeAuthorization} from '@/utils/request'
 
 /**
@@ -76,6 +76,30 @@ export async function getSet(formdataSt) {
   })
 }
 
+export async function setUser(formdataSt) {
+  return request(SETUSER, METHOD.POST,{
+    formdata:formdataSt
+  })
+}
+
+
+export async function delUser(formdataSt) {
+  return request(DELUSER, METHOD.POST,{
+    formdata:formdataSt
+  })
+}
+
+export async function setMoney(formdataSt) {
+  return request(SETMONEY, METHOD.POST,{
+    formdata:formdataSt
+  })
+}
+
+export async function setTask(formdataSt) {
+  return request(SETSER, METHOD.POST,{
+    formdata:formdataSt
+  })
+}
 export default {
   login,
   logout,

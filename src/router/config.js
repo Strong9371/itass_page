@@ -80,12 +80,7 @@ const options = {
 						icon: 'dashboard'
 					},
 					component: BlankView,
-					children: [{
-								path: 'myan',
-								name: '全局分析',
-
-								component: () => import('@/pages/dashboard/myan'),
-							},
+					children: [
 						{
 							path: 'workplace',
 							name: '工作台',

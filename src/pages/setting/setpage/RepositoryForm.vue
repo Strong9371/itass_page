@@ -1,78 +1,54 @@
 <template>
-  <a-form @submit="handleSubmit" :form="form" class="form" >
-    <a-row class="form-row" style="overflow-y: scroll;height: 300px">
-      <a-col :lg="4" :md="12" :sm="24" style="margin-right: 50px">
-        <a-form-item label="报警阈值">
-          <a-input
-              :default-value = "18"
-            placeholder="请输入分公司每日费用的报警阈值"
-            v-decorator="['报警阈值', {rules: [{ required: true, message: '请输入数字！', whitespace: true , pattern: '^[0-9]*$'}]}]"
+  <a-form layout="inline" @submit="handleSubmit" :form="form" class="form"  >
+    <a-row class="form-row">
+      <a-tooltip>
+        <template slot="title">
+          此项是分公司每日费用的报警阈值，不是分钟费用
+        </template>
+        <a-form-item :label="departData[0].pname" style="margin-right: 100px;margin-bottom: 50px">
 
-          />
-        </a-form-item>
-      </a-col>
-      <a-col style="margin-right: 50px" :xl="{span: 4}" :lg="{span: 4}" :md="{span: 4}" :sm="24" v-for="(item,index) in childrenDpart" :key="index">
-        <a-form-item :label="item.pname + item.costFix">
-          <a-input
-              :default-value = " 0 + item.costFix"
-            placeholder="请输入每分钟话费"
-            v-decorator="['item.pname', {rules: [{ required: true, message: '请输入数字！', whitespace: true , pattern: '^\\d+(\\.\\d+)?$'}]}]"
-          />
-        </a-form-item>
-      </a-col>
-<!--      <a-col :xl="{span: 8, offset: 2}" :lg="{span: 10}" :md="{span: 24}" :sm="24">-->
-<!--        <a-form-item :label="$t('manager')">-->
-<!--          <a-select-->
-<!--            :placeholder="$ta('select|manager')"-->
-<!--            v-decorator="['repository.manager', {rules: [{ required: true, message: $ta('select|manager')}]}]"-->
-<!--          >-->
-<!--            <a-select-option value="王同学">王同学</a-select-option>-->
-<!--            <a-select-option value="李同学">李同学</a-select-option>-->
-<!--            <a-select-option value="黄同学">黄同学</a-select-option>-->
-<!--          </a-select>-->
-<!--        </a-form-item>-->
-<!--      </a-col>-->
-<!--    </a-row>-->
-<!--    <a-row class="form-row">-->
-<!--      <a-col :lg="6" :md="12" :sm="24">-->
-<!--        <a-form-item :label="$t('approval')">-->
-<!--          <a-select-->
-<!--            :placeholder="$ta('select|approval')"-->
-<!--            v-decorator="['repository.auditor', {rules: [{ required: true, message: $ta('select|approval')}]}]"-->
-<!--          >-->
-<!--            <a-select-option value="王晓丽">王晓丽</a-select-option>-->
-<!--            <a-select-option value="李军">李军</a-select-option>-->
-<!--          </a-select>-->
-<!--        </a-form-item>-->
-<!--      </a-col>-->
-<!--      <a-col :xl="{span: 6, offset: 2}" :lg="{span: 8}" :md="{span: 12}" :sm="24">-->
-<!--        <a-form-item :label="$t('date')">-->
-<!--          <a-range-picker-->
-<!--            style="width: 100%"-->
-<!--            v-decorator="['repository.effectiveDate', {rules: [{ required: true, message: $ta('select|date')}]}]"-->
+                    <a-input
+                      placeholder="请输入分公司每日费用的报警阈值"
+                      v-decorator="[departData[0].pname, {rules: [{ required: true, message: '请输入数字！', whitespace: true , pattern: '^\\d+(\\.\\d+)?$'}],initialValue:departData[0].costFix.toString()}]"
+
+                    />
+<!--          <a-input-number-->
+<!--              :default-value = "departData[0].costFix"-->
 <!--          />-->
-<!--        </a-form-item>-->
-<!--      </a-col>-->
-<!--      <a-col :xl="{span: 8, offset: 2}" :lg="{span: 10}" :md="{span: 24}" :sm="24">-->
-<!--        <a-form-item :label="$t('type')">-->
-<!--          <a-select-->
-<!--            :placeholder="$ta('select|type')"-->
-<!--            v-decorator="['repository.type', {rules: [{ required: true, message: $ta('select|type')}]}]"-->
-<!--          >-->
-<!--            <a-select-option value="公开">公开</a-select-option>-->
-<!--            <a-select-option value="私密">私密</a-select-option>-->
-<!--          </a-select>-->
-<!--        </a-form-item>-->
-<!--      </a-col>-->
+        </a-form-item>
+      </a-tooltip>
+
+        <a-form-item :label="item.pname" v-for="(item,index) in childrenDpart" :key="index"  style="margin-right: 100px;margin-bottom: 50px">
+
+          <a-input
+            placeholder="请输入每分钟话费"
+            v-decorator="[item.pname, {rules: [{  required: true,message: '请输入数字！', whitespace: true , pattern: '^\\d*(\\.\\d*)?$'}],initialValue:item.costFix.toString()}]"
+          />
+<!--          <a-input-number-->
+<!--              :default-value = "item.costFix"-->
+<!--          />-->
+        </a-form-item>
+
     </a-row>
-    <a-form-item v-if="showSubmit" style="text-align: center">
-      <a-button type="primary" htmlType="submit" >提交</a-button>
+    <a-form-item v-if="showSubmit" style="text-align: center;position: absolute ;bottom: 20px;right: 250px" >
+      <a-popconfirm
+          title="确认修改费用明细?"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="handleSubmit"
+      >
+        <a-button type="primary" htmlType="submit" >设置</a-button>
+
+      </a-popconfirm>
 
     </a-form-item>
   </a-form>
 </template>
 
 <script>
+
+import {setMoney} from "@/services/user";
+
 export default {
   name: 'RepositoryForm',
   props: ['showSubmit','departData','childrenDpart'],
@@ -80,27 +56,35 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
+      isSeting :false
     }
   },
-  created() {
-    console.log(this.childrenDpart)
-    console.log(this.departData)
-  },
+
   methods: {
+    set(){
+      this.isSeting =  true
+    },
     handleSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values)
+
+          var formdataSt = JSON.stringify(values)
+          setMoney(formdataSt).then((response) => {
+            if (response.data.state == 1) {
+
+              this.$message.success(response.data.message);
+            } else {
+              this.$message.error(response.data.message);
+            }
+
+          })
+        }else{
+          this.$message.error("修改失败，请重新尝试！");
         }
       })
     },
-    // validate (rule, value, f) {
-    //   if (value !== undefined && value !== 'iczer') {
-    //     f('输入\'iczer\'试下？')
-    //   }
-    //   f()
-    // }
+
   }
 }
 </script>

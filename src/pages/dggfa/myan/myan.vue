@@ -98,7 +98,7 @@
           </a-tooltip>
 
           <h1 style="font-weight: bolder" v-if="(otherDate.v5_5 == 0) && (user.isAd == 0)">未设置费用明细</h1>
-          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd >= 1)">去设置费用明细 <a-icon type="tool" theme="twoTone"/></h1>
+          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd >= 1)" @click="setCost">去设置费用明细 <a-icon type="tool" theme="twoTone" /></h1>
 
           <div  v-if="otherDate.v5_5 != 0">
             <mini-progress v-if="loadMini" :target="otherDate.v5_2" :residue="otherDate.v5_1" />
@@ -447,8 +447,7 @@ export default {
   },
   watch: {
     value(value) {
-      console.log(value);
-
+      console.log(value)
     },
   },
   computed:{
@@ -456,6 +455,11 @@ export default {
   },
   methods: {
     moment,
+
+    //跳转至费用设置界面
+    setCost(){
+      this.$router.push('/setting/setpage')
+    },
     //实时地区选择器
     changeMini(value) {
       this.loadMini = false
@@ -526,7 +530,6 @@ export default {
         formdataSt = JSON.stringify(formdata)
         getWeekCompare(formdataSt).then( (response)=> {
           const resdata = response.data.data;
-          console.log(resdata)
           this.zhuanbiV1Data = resdata.zhuanbiV1Data
           this.zhuanbiV2Data = resdata.zhuanbiV2Data
           this.zhuanbiV3Data = resdata.zhuanbiV3Data
@@ -638,7 +641,6 @@ export default {
     //外比日期选择
 
     onChange(date, dateString) {
-      console.log(date, dateString);
       this.bigDate = date;
       this.bigviewDate02 = dateString;
     },
@@ -655,7 +657,6 @@ export default {
 
           formdataSt = JSON.stringify(formdata)
           getOutCompare(formdataSt).then( (response)=> {
-            console.log(response)
             const outData = response.data.data;
             this.outV1Data = outData.outV1Data;
             this.outV2Data = outData.outV2Data;
@@ -676,7 +677,6 @@ export default {
 
         formdataSt = JSON.stringify(formdata)
         getOutCompare(formdataSt).then( (response)=> {
-          console.log(response)
           const outData = response.data.data;
           this.outV1Data = outData.outV1Data;
           this.outV2Data = outData.outV2Data;
@@ -703,15 +703,14 @@ export default {
     onError(){
 
     },
-    handleOk(e) {
-      console.log(e);
-      this.visible = false;
-    },
+    // handleOk(e) {
+    //   this.visible = false;
+    //   console.log(e)
+    // },
 
 
   },
   created() {
-    console.log(this.user)
     this.loadMini = false;
     this.loadBig = false
     this.paramPid = this.user.pid;

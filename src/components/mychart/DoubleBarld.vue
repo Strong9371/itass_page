@@ -36,7 +36,6 @@
 // });
 // const data = dv.rows;
 //
-// console.log(data)
 const label = { offset: 12 };
 const adjust = [{ type: 'dodge', marginRatio: 1 / 32 }];
 

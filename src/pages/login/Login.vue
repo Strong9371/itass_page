@@ -71,7 +71,7 @@
 import CommonLayout from '@/layouts/CommonLayout'
 import {
   login,
-  getRoutesConfig
+  // getRoutesConfig
 } from '@/services/user'
 import {
   setAuthorization
@@ -128,7 +128,6 @@ export default {
           // roles
         } = loginRes.data
         this.setUser(user)
-        console.log(router)
         // this.setPermissions(permissions)
         // this.setRoles(roles)
         setAuthorization({
@@ -145,9 +144,8 @@ export default {
         this.$router.push('/dggfa/myan')
         this.$message.success(loginRes.message, 3)
 
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          console.log(routesConfig)
+        // getRoutesConfig().then(result => {
+          // const routesConfig = result.data.data
           // loadRoutes({
           //   router: this.$router,
           //   store: this.$store,
@@ -155,7 +153,7 @@ export default {
           // }, routesConfig)
           // this.$router.push('/dggfa/myan')
           // this.$message.success(loginRes.message, 3)
-        })
+        // })
       } else {
         this.error = loginRes.message
       }
