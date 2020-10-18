@@ -1,6 +1,6 @@
 <h1 align="center">顶呱呱网管助手</h1>
 
-<div align="center">
+
 
 ##后台框架：
 - DGGITASS_SERVER：https://github.com/Strong9371/itass_server.git
@@ -58,4 +58,3 @@ $ npm run serve
 非常感谢VAA框架支持
 - Vue Antd Admin：(https://github.com/iczer/vue-antd-admin/issues)
 
-</div>
