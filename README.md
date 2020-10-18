@@ -15,13 +15,13 @@ $ tomcat部署、
 $ nginx实现域名反向代理，服务器负载均衡、
 $ redission处理高并发写数据
 ```
-  
-  ### 工具库
-  ```bash
-  $ mysql  基础读写
-  $ redis  缓存
-  $ easyexcel  处理文档
-  ```
+
+### 工具库
+```bash
+$ mysql  基础读写
+$ redis  缓存
+$ easyexcel  处理文档
+```
 
 ##前端框架：
 - DGGITASS_PAGE：https://github.com/Strong9371/itass_page.git
