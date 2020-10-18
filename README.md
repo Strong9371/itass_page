@@ -29,7 +29,6 @@ $ easyexcel  处理文档
  
 
 
-</div>
 
 - 前端框架：https://iczer.gitee.io/vue-antd-admin
 - 使用文档：https://iczer.gitee.io/vue-antd-admin-docs
@@ -59,3 +58,4 @@ $ npm run serve
 非常感谢VAA框架支持
 - Vue Antd Admin：(https://github.com/iczer/vue-antd-admin/issues)
 
+</div>
