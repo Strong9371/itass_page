@@ -10,7 +10,7 @@
           <!--          </a-tooltip>-->
             <div>
               <a-select :default-value="user.pname" style="width: 130px;position: absolute;top: -110px;right: 0px"
-                        @change="changeMini">
+                        @change="changeMini" >
 
                 <a-select-option v-for="(item,index) in firstDepart" :key="index" :value="item.pname+','+item.id">
 <!--                  <a-tooltip :title="item.pname" slot="action">-->
@@ -18,6 +18,8 @@
 <!--                  </a-tooltip>-->
                 </a-select-option>
               </a-select>
+
+
             </div>
 
             <div >
@@ -97,11 +99,11 @@
             <a-icon type="info-circle-o"/>
           </a-tooltip>
 
-          <h1 style="font-weight: bolder" v-if="(otherDate.v5_5 == 0) && (user.isAd == 0)">未设置费用明细</h1>
-          <h1 style="font-weight: bolder" v-if="otherDate.v5_5 == 0  && (user.isAd >= 1)" @click="setCost">去设置费用明细 <a-icon type="tool" theme="twoTone" /></h1>
+          <h1 style="font-weight: bolder" v-if="(isCost == 0) && (user.isAd == 0)">未设置费用明细</h1>
+          <h1 style="font-weight: bolder" v-if="isCost == 0  && (user.isAd >= 1)" @click="setCost">去设置费用明细 <a-icon type="tool" theme="twoTone" /></h1>
 
-          <div  v-if="otherDate.v5_5 != 0">
-            <mini-progress v-if="loadMini" :target="otherDate.v5_2" :residue="otherDate.v5_1" />
+          <div  v-if="isCost != 0">
+            <mini-progress v-if="loadMini" :target="costFix" :residue="otherDate.v5_1" />
           </div>
           <div v-if="loadMini" slot="footer" style="white-space: nowrap;overflow: hidden">
             <span>{{ $t('average') }} {{otherDate.v5_3}}</span>
@@ -401,6 +403,9 @@ export default {
         v5_5:0
       },
 
+      //是否设置了费用
+      isCost : 1,
+      costFix:0,
       v1data:[],
       v2data:[],
       v3data:[],
@@ -460,6 +465,7 @@ export default {
     setCost(){
       this.$router.push('/setting/setpage')
     },
+
     //实时地区选择器
     changeMini(value) {
       this.loadMini = false
@@ -472,7 +478,8 @@ export default {
       var formdataSt = JSON.stringify(formdata)
       getMini(formdataSt).then( (response)=> {
         const resdata =  response.data.data.mini;
-
+        this.isCost = resdata.costData.isCost;
+        this.costFix = resdata.costData.costFix;
         this.v1data = resdata.v1;
         this.v2data = resdata.v2;
         this.v3data = resdata.v3;
@@ -750,6 +757,8 @@ export default {
       //
       // }
       const temp = resdata.otherDate
+      this.isCost = resdata.costData.isCost;
+      this.costFix = resdata.costData.costFix;
       this.otherDate={
             v1_1: temp.v1_1 ? temp.v1_1 : 0,
             v1_2:temp.v1_2 ? temp.v1_2.toFixed(0) : 0,

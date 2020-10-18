@@ -245,18 +245,27 @@ export default {
       if(target['id']){
       //  修改
         formdata["id"] = target['id'];
-      }else {
-        if(formdata.nameValue == "" || formdata.nameValue ==null || formdata.passValue == "" || formdata.passValue ==null){
+      }else{
+      //  添加
+        if(this.nameValue  == "" || this.nameValue  ==null || this.passValue == "" ||  this.passValue ==null){
           this.$message.error("未填写账号或密码，请检查！");
           return ;
         }
       }
       if (target) {
         if(this.nameiS){
-          formdata["uname"] = this.nameValue
+          formdata["uname"] = this.nameValue.trim()
+          if(formdata["uname"]  == "" || formdata["uname"]  ==null ){
+            this.$message.error("未填写账号，请检查！");
+            return ;
+          }
         }
         if(this.passIs){
           formdata["password"] = this.passValue.trim()
+          if(formdata["password"] == "" ||  formdata["password"] ==null){
+            this.$message.error("未填写密码，请检查！");
+            return ;
+          }
         }
         if(this.adis){
           formdata["isAd"] = this.isAd

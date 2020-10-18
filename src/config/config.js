@@ -5,7 +5,8 @@ module.exports = {
     mode: 'dark',
   },
   multiPage: true,
-  // asyncRoutes: true,
+  asyncRoutes: true,
+  port:8888,
   animate: {
     name: 'lightSpeed',
     direction: 'left'

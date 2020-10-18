@@ -46,12 +46,13 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: modifyVars(),
-          javascriptEnabled: true
+          javascriptEnabled: true,
         }
-      }
+      },
+
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/vue-antd-admin/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : './',
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false

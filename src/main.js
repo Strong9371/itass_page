@@ -29,3 +29,10 @@ new Vue({
   i18n,
   render: h => h(App),
 }).$mount('#app')
+
+var devInnerHeight = 1211.0 // 开发时的InnerHeight
+var devDevicePixelRatio = 1.0// 开发时的devicepixelratio
+var devScaleFactor = 1.3 // 开发时的ScaleFactor
+var scaleFactor = require('electron').screen.getPrimaryDisplay().scaleFactor
+var zoomFactor = (window.innerHeight / devInnerHeight) * (window.devicePixelRatio / devDevicePixelRatio) * (devScaleFactor / scaleFactor)
+require('vue').webFrame.setZoomFactor(zoomFactor)

@@ -12,8 +12,8 @@
       </div>
       <div :class="['admin-header-right', headerTheme]">
 <!--          <header-search class="header-item" @active="val => searchActive = val" />-->
-          <a-tooltip class="header-item" title="帮助文档" placement="bottom" >
-            <a href="https://iczer.github.io/vue-antd-admin/" target="_blank">
+          <a-tooltip class="header-item" title="源码文档" placement="bottom" >
+            <a href="https://github.com/Strong9371/itass_page" target="_blank">
               <a-icon type="question-circle-o" />
             </a>
           </a-tooltip>
